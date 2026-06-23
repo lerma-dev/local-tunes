@@ -2,8 +2,10 @@
 import { state } from "../utils/state.js";
 import { setTheme, getStoredTheme } from "../utils/theme.js";
 import { setMode, getStoredMode, syncModeIcon } from "../utils/mode.js";
-import { aplicarDiseñoCompleto, sincronizarFondoConCSharp } from "../core/windows.core.js";
-
+import {
+  aplicarDiseñoCompleto,
+  sincronizarFondoConCSharp,
+} from "../core/windows.core.js";
 import {
   exportBackup,
   importBackup,
@@ -11,55 +13,68 @@ import {
   checkVersionChange,
 } from "../utils/backup.js";
 import { initVersionApp } from "../utils/version_app.js";
+let settingsInitialized = false;
+
+function openSettings() {
+  document.getElementById("settings-panel").classList.add("is-open");
+  document.getElementById("settings-overlay").classList.add("is-open");
+}
+export function openSettingsHandler() {
+  document.getElementById("settings-panel").classList.add("is-open");
+  document.getElementById("settings-overlay").classList.add("is-open");
+  checkBackupReminder();
+  checkVersionChange();
+}
 
 export function initSettings() {
-  const panel = document.getElementById("settings-panel");
-  const panelTitlebar = document.getElementById("setting-titlebar");
-  const overlay = document.getElementById("settings-overlay");
-  const openBtn = document.getElementById("settings-btn");
-  const closeBtn = document.getElementById("settings-close-btn");
   const titlebarRow = document.getElementById("setting-titlebar-style");
   const titlebarDropdown = document.getElementById("titlebar-style-dropdown");
+  const panel = document.getElementById("settings-panel");
+  const overlay = document.getElementById("settings-overlay");
+  const closeBtn = document.getElementById("settings-close-btn");
+
+  window.abrirAjustes = openSettingsHandler;
 
   initVersionApp();
 
-  // --- Abrir / cerrar ---
-  function openSettings() {
-    panel.classList.add("is-open");
-    panelTitlebar.classList.add("is-open");
-    overlay.classList.add("is-open");
+  if (settingsInitialized) return;
+  settingsInitialized = true;
+
+  const sidebarBtn = document.getElementById("setting-btn-sidebar");
+  if (sidebarBtn) {
+    sidebarBtn.removeEventListener("click", openSettingsHandler);
+    sidebarBtn.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      openSettingsHandler();
+    });
   }
 
+  // --- Botón de móvil ---
+  const mobileBtn = document.getElementById("settings-btn");
+  if (mobileBtn) {
+    mobileBtn.removeEventListener("click", openSettingsHandler);
+    mobileBtn.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      openSettingsHandler();
+    });
+  }
+
+  // --- Cierre y Teclas ---
   function closeSettings() {
     panel.classList.remove("is-open");
-    panelTitlebar.classList.remove("is-open");
     overlay.classList.remove("is-open");
   }
 
-  // 2. CAMBIA ESTO: Escucha global de clicks para los botones de configuración
-  document.addEventListener("click", (e) => {
-    // Si hacen click en el botón viejo del sidebar O en el nuevo de la barra de título
-    if (
-      e.target.closest("#settings-btn") ||
-      e.target.closest("#setting-titlebar")
-    ) {
-      openSettings();
-      checkBackupReminder();
-      checkVersionChange();
-    }
-  });
-
-  // El resto de tus listeners de cierre se quedan exactamente igual
   closeBtn.addEventListener("click", closeSettings);
   overlay.addEventListener("click", closeSettings);
-  document.addEventListener("keydown", (e) => {
-    e.preventDefault();
-    if (e.key === "Escape") closeSettings();
-  });
+
   document.addEventListener("keydown", (e) => {
     if (e.altKey && e.key.toLowerCase() === "s") {
       e.preventDefault();
       openSettings();
+    }
+    if (e.key === "Escape") {
+      closeSettings();
     }
   });
 
@@ -141,11 +156,6 @@ export function initSettings() {
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeBackupDropdown();
-  });
-
-  openBtn.addEventListener("click", () => {
-    checkBackupReminder();
-    checkVersionChange();
   });
 
   // --- Toggle: Aleatorio ---
