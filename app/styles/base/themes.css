@@ -1,13 +1,14 @@
 [data-theme="light"] {
-  /* Barra de titulo custom para ejecutable de windows */
-  --bg-titlebar-custom: #e8e3f5;      
+  /* Barra de titulo custom para ejecutable de windows #e0d0ff */
+  --bg-titlebar-custom: #ede9ff;      
   --text-titlebar-custom: #2b1f6b;     
-  --border-bottom-titlebar: 1px solid #ab95ff;
+  --border-bottom-titlebar: 1px solid rgba(40, 30, 80, 0.1);
   --bg-btn-ctrl: #f1eff7;             
   --border-btn-ctrl: 1px solid #7c5dfa;
   --color-btn-ctrl: #7c5dfa;       
   --shadow-btn-ctrl: rgba(124, 93, 250, 0.2);
-  --color-icons-ctrl: #4f3db4;
+  --color-icons-ctrl: #3f1579;
+  --line-divider: #3d1379;
   /* temas generales */
   --bg: #f4f2ff;
   --bg-secondary: #ede9ff;
@@ -42,15 +43,16 @@
 }
 
 [data-theme="dark"] {
-  /* Barra de titulo custom para ejecutable de windows */
-  --bg-titlebar-custom: #4f3db4;
+  /* Barra de titulo custom para ejecutable de windows #4f3db4 #a176ff;*/
+  --bg-titlebar-custom:  #0e0c1a;
   --text-titlebar-custom: #fff;
-  --border-bottom-titlebar: 1px solid #a176ff;
+  --border-bottom-titlebar: 1px solid  rgba(255, 255, 255, 0.08);
   --bg-btn-ctrl: #2a114d;
-  --border-btn-ctrl: 1px solid #a176ff;
-  --color-btn-ctrl: #a176ff;
-  --shadow-btn-ctrl: #a176ff;
-  --color-icons-ctrl: #1a0933;
+  --border-btn-ctrl: 1px solid rgba(161, 118, 255, 0.3); 
+  --color-btn-ctrl: #a176ff; 
+  --shadow-btn-ctrl: rgba(161, 118, 255, 0.15); 
+  --color-icons-ctrl: #3f1579;
+  --line-divider: #b077ff;
   /* temas generales */
   --bg: #08070f;
   --bg-secondary: #0e0c1a;

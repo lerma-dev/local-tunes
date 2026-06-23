@@ -20,7 +20,7 @@
 /* --- PANEL --- */
 .settings-panel {
   position: absolute !important; /* Cambiar de fixed a absolute si es necesario */
-  top: 0 !important;             /* Ahora el 0 será exactamente debajo de la barra custom */
+  top: 0 !important; /* Ahora el 0 será exactamente debajo de la barra custom */
   height: 100% !important;
   right: 0;
   bottom: 0;
@@ -73,15 +73,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 1px 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--glass-border);
   flex-shrink: 0;
 }
+
 
 .settings-panel__title {
   display: flex;
   align-items: center;
   gap: 8px;
+  user-select: none;
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
@@ -133,6 +135,7 @@
   padding: 6px 0 8px;
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-bg) transparent;
+  user-select: none;
 }
 
 .settings-panel__body::-webkit-scrollbar {
@@ -295,14 +298,26 @@
 
 /* --- FOOTER --- */
 .settings-panel__footer {
+  min-height: 0%;
   padding: 12px 16px;
   border-top: 1px solid var(--glass-border);
   flex-shrink: 0;
 }
 
+.settings-panel__footer.is-custom-bar {
+  min-height: 11%;
+}
+
+@media (width: 488px) {
+  .settings-panel__footer.is-custom-bar {
+    min-height: 0% !important; /* O el valor que desees */
+  }
+}
+
 .settings-panel-version {
   display: block;
   text-align: center;
+  user-select: none;
   font-size: 0.8rem;
   color: var(--text-muted);
   letter-spacing: 0.8px;

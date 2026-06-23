@@ -1,6 +1,7 @@
 // scripts/modules/core/windows.core.js
 let isDesktop = false;
 let titlebar = null;
+let isMaximized = false;
 
 function sendCommand(accion) {
   if (window.chrome?.webview?.postMessage) {
@@ -16,40 +17,57 @@ function renderTitleBar() {
   titlebar = document.getElementById("desktop-titlebar");
   if (!titlebar) return;
 
+  const actionText = isMaximized ? "Restore" : "Maximize";
+  const iconName = isMaximized ? "restore" : "maximize";
+
   titlebar.innerHTML = `
-  <img src="./assets/icons/favicon.ico" class="logo-titlebar" alt="Lerma Music" /> 
-  <div class="title">Local Tunes</div>
+  <div class="title-container">
+    <img src="./assets/icons/favicon.ico" class="logo-titlebar" alt="Logo" /> 
+    <div class="title">Local Tunes</div>
+  </div>
   <div class="window-controls">
-    <button id="setting-titlebar" class="ctrl-btn btn-settings" title="Abrir Configuración (ALT + S)">
+    <button onclick="window.abrirAjustes()" class="ctrl-btn btn-settings" title="Ajustes (Alt + S)">
       <l-icon name="settings-outline"></l-icon>
     </button>
-    <button onclick="window.sendCommand('close')" class="ctrl-btn btn-close" title="Cerrar">
+    <div class="line"></div>
+    <button onclick="window.sendCommand('minimize')" class="ctrl-btn btn-minimize" title="Minimize">
+      <l-icon name="chevron-down"></l-icon>
+    </button>
+    <button onclick="toggleMaximize()" class="ctrl-btn btn-maximize" title="${actionText}">
+      <l-icon name="${iconName}"></l-icon>
+    </button>
+    <button onclick="window.sendCommand('close')" class="ctrl-btn btn-close" title="Close">
       <l-icon name="close"></l-icon>
-    </button>
-    <button onclick="window.sendCommand('minimize')" class="ctrl-btn btn-minimize" title="Minimizar">
-      <l-icon name="minimize"></l-icon>
-    </button>
-    <button onclick="window.sendCommand('maximize')" class="ctrl-btn btn-maximize" title="Maximizar">
-      <l-icon name="miximize"></l-icon>
     </button>
   </div>
   `;
 }
 
+function toggleMaximize() {
+  isMaximized = !isMaximized;
+  window.sendCommand("maximize");
+  renderTitleBar();
+}
+
 export function sincronizarFondoConCSharp() {
   const estiloComputado = getComputedStyle(document.documentElement);
-  const colorBgHex = estiloComputado.getPropertyValue('--bg').trim();
+  const colorBgHex = estiloComputado
+    .getPropertyValue("--bg-titlebar-custom")
+    .trim();
 
   if (window.chrome?.webview?.postMessage) {
-    window.chrome.webview.postMessage(JSON.stringify({
-      action: "sync_background_color",
-      color: colorBgHex
-    }));
+    window.chrome.webview.postMessage(
+      JSON.stringify({
+        action: "sync_background_color",
+        color: colorBgHex,
+      }),
+    );
   }
 }
 
 export function initTitlebar() {
   window.sendCommand = sendCommand;
+  window.toggleMaximize = toggleMaximize;
   renderTitleBar();
   if (titlebar) {
     titlebar.classList.remove("custom", "native");
@@ -88,6 +106,7 @@ export function initTitlebar() {
       const diseñoGuardado = localStorage.getItem("titlebar") || "custom";
       const verificarWebview = () => {
         const sidebarBottom = document.getElementById("sidebar-bottom");
+
         if (sidebarBottom) {
           aplicarDiseñoCompleto(diseñoGuardado);
           clearInterval(intentoSincronizacion);
@@ -112,6 +131,11 @@ export function initTitlebar() {
   }
 }
 
+function actualizarModoUI(isCustom) {
+  const root = document.getElementById("footer-settings");
+  root.classList.toggle("is-custom-bar", isCustom);
+}
+
 export function aplicarDiseñoCompleto(estilo) {
   if (!titlebar) {
     titlebar = document.getElementById("desktop-titlebar");
@@ -120,6 +144,7 @@ export function aplicarDiseñoCompleto(estilo) {
 
   localStorage.setItem("titlebar", estilo);
   const sidebarBottom = document.getElementById("sidebar-bottom");
+  const settingBtn = document.getElementById("settings-btn");
 
   if (estilo === "native") {
     titlebar.classList.remove("custom", "native");
@@ -128,18 +153,27 @@ export function aplicarDiseñoCompleto(estilo) {
     if (sidebarBottom) {
       sidebarBottom.style.display = "flex";
     }
+    if (settingBtn) {
+      settingBtn.style.display = "flex";
+    }
 
     sendCommand("native_bar");
+    actualizarModoUI(false);
     return;
   }
 
   sendCommand("custom_bar");
+  actualizarModoUI(true);
 
   titlebar.style.display = "flex";
   if (sidebarBottom) {
     sidebarBottom.style.display = "none";
   }
 
+  if (settingBtn) {
+    settingBtn.style.display = "none";
+  }
+
   titlebar.classList.remove("custom", "native");
-  titlebar.classList.add(estilo); 
+  titlebar.classList.add(estilo);
 }

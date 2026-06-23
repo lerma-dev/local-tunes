@@ -9,9 +9,10 @@ body {
   flex-direction: column !important;
 }
 
-/* 🚀 Forzamos que si tiene la clase .custom, se muestre sí o sí ignorando el display inline */
 #desktop-titlebar.custom[style] {
   display: flex !important;
+  align-items: center;
+  position: relative;
 }
 
 #desktop-titlebar {
@@ -27,24 +28,36 @@ body {
   box-sizing: border-box;
 }
 
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 .logo-titlebar {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
 
-/* 🚀 Contenedor de la app estricto */
 #app {
   flex-grow: 1 !important;
   width: 100% !important;
-  height: calc(100vh - 32px) !important; /* Límite físico absoluto */
+  height: calc(100vh - 32px) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   position: relative !important;
   box-sizing: border-box;
 }
 
-/* 🚀 Asegurar que CUALQUIER vista hija directa inyectada no flote sobre la barra */
 #app > div,
 #app > section {
   max-height: 100% !important;
@@ -81,7 +94,9 @@ body {
   transition: all 0.15s ease;
 }
 .ctrl-btn l-icon {
-  font-size: 14px;
+  font-size: 1rem;
+  color: var(--color-btn-ctrl);
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,13 +109,18 @@ body {
   margin-left: auto;
   gap: 6px;
 }
+#desktop-titlebar.custom .line {
+  border-left: 1px solid var(--line-divider);
+  height: 20px;
+  margin: 0 2px;
+}
 #desktop-titlebar.custom .ctrl-btn {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 25px;
   height: 25px;
-  border-radius: 50%;
+  border-radius: 25%;
   background: var(--bg-btn-ctrl);
   border: var(--border-btn-ctrl);
   color: var(--color-button-controls);
