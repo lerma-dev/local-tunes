@@ -2,14 +2,19 @@
 let isDesktop = false;
 let titlebar = null;
 let isMaximized = false;
+let clickInBar = false;
+let isDragging = false;
+let isMouseDown = false;
+let dragSent = false;
+let startX, startY;
 
 function sendCommand(accion) {
   if (window.chrome?.webview?.postMessage) {
     const payload = JSON.stringify({ action: accion });
     window.chrome.webview.postMessage(payload);
-    console.log("📤 Comando enviado a C#:", payload);
+    console.log("Comando Enviado:", payload);
   } else {
-    console.warn("⚠️ WebView2 no disponible para enviar:", accion);
+    console.warn("WebView2 no disponible para enviar:", accion);
   }
 }
 
@@ -69,13 +74,49 @@ export function initTitlebar() {
   window.sendCommand = sendCommand;
   window.toggleMaximize = toggleMaximize;
   renderTitleBar();
+  document.addEventListener("mouseup", () => {
+    isMouseDown = false;
+    isDragging = false;
+    dragSent = false; // Reset total al soltar el botón
+  });
+  document.addEventListener("click", (e) => {
+    // Si estamos arrastrando, no cerramos
+    if (isDragging) return;
+
+    if (window.chrome?.webview?.postMessage) {
+      sendCommand("close_menu");
+    }
+  });
   if (titlebar) {
     titlebar.classList.remove("custom", "native");
     titlebar.addEventListener("mousedown", (e) => {
-      if (e.target.closest(".ctrl-btn") || e.target.closest(".logo-titlebar")) {
+      if (e.target.closest(".ctrl-btn") || e.target.closest(".logo-titlebar"))
         return;
+      if (e.button !== 0) return;
+
+      isMouseDown = true; // Empezó la presión
+      isDragging = false;
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+
+    titlebar.addEventListener("mousemove", (e) => {
+      // Si movemos el mouse más de 5px, entonces es un arrastre real
+      if (isMouseDown && !dragSent) {
+        if (
+          Math.abs(e.clientX - startX) > 5 ||
+          Math.abs(e.clientY - startY) > 5
+        ) {
+          isDragging = true;
+          dragSent = true; // Bloquea cualquier otro envío hasta el próximo mousedown
+          sendCommand("start_drag");
+        }
       }
-      sendCommand("drag_window");
+    });
+
+    titlebar.addEventListener("mouseup", () => {
+      isMouseDown = false;
+      isDragging = false;
     });
 
     titlebar.addEventListener("contextmenu", (e) => {
