@@ -12,14 +12,8 @@ Un reproductor de música web de alto rendimiento diseñado para gestionar libre
   <img src="https://img.shields.io/badge/Get_it_on-GitHub_Pages-bc13fe?style=for-the-badge&logo=github&logoColor=white" alt="Get it on GitHub Pages">
 </a>
 
-<a href="https://github.com/lerma-dev/music-pwa/releases/download/v1.6.6/local_tunes_v1.6.6.exe" style="text-decoration: none; display: inline-flex; vertical-align: top; height: 28px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 0px; overflow: hidden;">
-  <span style="background-color: #555555; color: #ffffff; display: flex; align-items: center; padding: 0 10px; height: 100%; border-radius: 0px;">
-    <img src="./docs/windows.svg" width="13" height="13" style="margin-right: 6px; display: inline-block; vertical-align: middle; filter: brightness(0) invert(1);" alt="">
-    DOWNLOAD FOR
-  </span>
-  <span style="background-color: #0078d4; color: #ffffff; display: flex; align-items: center; padding: 0 10px; height: 100%; border-radius: 0px;">
-    WINDOWS
-  </span>
+<a href="https://github.com/lerma-dev/music-pwa/releases/download/v1.6.6/local_tunes_v1.6.6.exe">
+  <img src="https://img.shields.io/badge/Dowload_for-WINDOWS-0078D4?style=for-the-badge&logoColor=white&labelColor=555555" alt="Download for Windows">
 </a>
 
 ---
@@ -69,15 +63,16 @@ code .
 
 > [!IMPORTANT]
 > Antes de iniciar, necesitas tener instalado **Python 3**. Si no lo tienes, lo puedes instalar rápidamente con un solo comando desde tu terminal:
-> 
-> * **Windows:** 
->`winget install Python.Python.3`
-> * **Linux (Ubuntu/Debian):** 
->`sudo apt update && sudo apt install -y python3`
-> * **macOS (Homebrew):** 
->`brew install python`
+>
+> - **Windows:**
+>   `winget install Python.Python.3`
+> - **Linux (Ubuntu/Debian):**
+>   `sudo apt update && sudo apt install -y python3`
+> - **macOS (Homebrew):**
+>   `brew install python`
 
 **Verifica que se instaló correctamente:**
+
 ```bash
 # Para Linux/MacOS
 python3 --version
@@ -104,7 +99,7 @@ start_app
 ```
 
 - **Linux / macOS**
-Asegúrate de dar permisos de ejecución la primera vez:
+  Asegúrate de dar permisos de ejecución la primera vez:
 
 ```bash
 chmod +x start_app.sh
