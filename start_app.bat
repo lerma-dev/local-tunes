@@ -10,7 +10,7 @@ if %errorlevel% neq 0 (
   set URL= http://localhost
 ) else (
   set PUERTO=8080
-  set URL=http://localhost:8080
+  set URL=http://localhost:3300
 )
 echo URL:%ESC%[92m %URL% %ESC%[0m
 echo Carpeta: /app

@@ -11,7 +11,7 @@ if ! netstat.exe -ano | grep -q ":80 "; then
     URL="http://localhost"
 else
     PUERTO=8080
-    URL="http://localhost:8080"
+    URL="http://localhost:3300"
 fi
 
 # Mostrar información al usuario

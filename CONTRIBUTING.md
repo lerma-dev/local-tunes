@@ -1,24 +1,29 @@
-# 🤝 Contribuyendo a Music PWA
+# 🤝 Contribuyendo a Local Tunes
 
-¡Gracias por querer mejorar el reproductor! Para mantener la estabilidad de las versiones en producción y beta, seguimos este flujo de trabajo.
+¡Gracias por querer mejorar el reproductor! Para mantener la estabilidad en los entornos de producción y pruebas, seguimos un flujo de trabajo basado en una rama central de desarrollo y ramas de despliegue automatizadas.
 
 ## 🌿 Estructura de Ramas
 
-* **`main`**: Rama de producción (Netlify). **Protegida.** Solo el Administrador y dueño de este reposotorio realiza despliegues aquí.
-* **`music_beta`**: Rama de pruebas activa (GitHub Pages). Aquí probamos funciones como el ecualizador y notificaciones.
-* **Ramas de trabajo**: `op_hector`, `aztrad` o cualquier `feat/nueva-mejora`.
+* **`main`**: Rama principal de desarrollo. Contiene todo el código fuente, scripts de entorno y documentación (`docs/`, `README.md`, etc.). **Todos los Pull Requests deben apuntar aquí.**
+* **`beta` (Solo Lectura - GitHub Pages)**: Rama de despliegue para pruebas experimentales. Es un *subtree* de la carpeta `app`. **Protegida.**
+* **`prod` (Solo Lectura - Netlify)**: Rama de despliegue estable para producción. Es un *subtree* de la carpeta `app`. **Protegida.**
 
+> [!IMPORTANT]
+> Las ramas `beta` y `prod` son de **solo lectura** para los colaboradores y se gestionan exclusivamente mediante los scripts de despliegue del Administrador. No abras Pull Requests hacia ellas.
 ## 🛠️ ¿Cómo colaborar?
 
 1.  **Haz un Fork** del proyecto.
-2.  **Crea una rama** desde `music_beta` para tu mejora: `git checkout -b feat/mi-mejora`.
+2. **Crea una rama de trabajo** a partir de `main`:
+```bash
+git checkout main
+git checkout -b feat/mi-nueva-mejora
+```
 3.  **Realiza tus cambios** respetando la estética *Dark Modern* (acentos `#bc13fe`).
-4.  **Abre un Pull Request (PR)** apuntando siempre a la rama `music_beta`.
+4.  **Abre un Pull Request (PR)** apuntando siempre a la rama main del repositorio original.
 
-> [!IMPORTANT]
-> No se aceptarán PRs directos a `main`. Todo cambio debe ser validado primero en la beta.
+## Guía de Estilo
+* **Vanilla JS:** Código limpio, modular y directo. Evita añadir librerías o dependencias externas pesadas.
 
-## 🎨 Guía de Estilo
-* Usa **Vanilla JS** (evita librerías externas innecesarias).
-* Mantén el diseño **Responsive** (Mobile First).
-* Asegúrate de que el **Service Worker** siga funcionando tras tus cambios.
+* **Diseño Responsivo:** Enfoque Mobile-First para asegurar que la interfaz se adapte perfectamente tanto a smartphones como a resoluciones de escritorio.
+
+* **Service Worker Seguro:** Verifica que tus modificaciones no interfieran con la lógica de detección de entornos locales en register_sw.js.
