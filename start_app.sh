@@ -10,7 +10,7 @@ if ! netstat.exe -ano | grep -q ":80 "; then
     PUERTO=80
     URL="http://localhost"
 else
-    PUERTO=8080
+    PUERTO=3300
     URL="http://localhost:3300"
 fi
 

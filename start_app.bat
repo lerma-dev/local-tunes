@@ -9,7 +9,7 @@ if %errorlevel% neq 0 (
   set PUERTO=80
   set URL= http://localhost
 ) else (
-  set PUERTO=8080
+  set PUERTO=3300
   set URL=http://localhost:3300
 )
 echo URL:%ESC%[92m %URL% %ESC%[0m
