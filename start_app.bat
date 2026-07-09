@@ -19,4 +19,5 @@ echo Apagar servidor %ESC%[93m ctrl + c %ESC%[0m
 
 :: Inicia el servidor de Python
 python -m http.server %PUERTO% --directory ./app
-pause
+
+taskkill /F /IM python.exe >nul 2>&1
