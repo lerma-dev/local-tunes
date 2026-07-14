@@ -49,6 +49,7 @@ export function toggleFavorite(folder, songTitle, event) {
     }
     saveFavorites();
     import('./songs.js').then(({ renderSongs }) => renderSongs(state.currentQueue));
+    import('./all-songs.js').then(({refreshAllSongsView}) => refreshAllSongsView(state.currentQueue));
 }
 
 export async function toggleFavoriteFromFavs(folder, title, event) {

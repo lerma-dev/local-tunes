@@ -1,3 +1,4 @@
+/* styles/base/themes.css */
 [data-theme="light"] {
   /* Barra de titulo custom para ejecutable de windows #e0d0ff */
   --bg-titlebar-custom: #ede9ff;      
@@ -40,6 +41,7 @@
   --modal-bg: linear-gradient(145deg, #ede9ff, #e5e0ff);
   --modal-overlay: rgba(20, 15, 50, 0.45);
   --settings-overlay: rgba(100, 80, 160, 0.25);
+  --color-text: #000;
 }
 
 [data-theme="dark"] {
@@ -78,4 +80,5 @@
   --modal-bg: linear-gradient(145deg, #1a1735, #0f0d20);
   --modal-overlay: rgba(4, 3, 12, 0.75);
   --settings-overlay: rgba(0, 0, 0, 0.6);
+  --color-text: #fff;
 }

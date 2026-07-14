@@ -147,7 +147,7 @@ export function playSong(i) {
             title:   song.title,
             artist:  song.artist,
             album:   document.getElementById('current-folder-title').textContent,
-            artwork: [{ src: 'assets/icons/icon-512.png', sizes: '512x512', type: 'image/png' }]
+            artwork: [{ src: 'assets/icons/favicon.svg', sizes: '512x512', type: 'image/svg+xml' }]
         });
 
         navigator.mediaSession.setActionHandler('previoustrack', playPrev);
@@ -200,7 +200,7 @@ function updateUI(song) {
             title: song.title,
             artist: song.artist,
             album: document.getElementById('current-folder-title')?.textContent || "Mi Música",
-            artwork: [{ src: 'assets/icons/icon-512.png', sizes: '512x512', type: 'image/png' }]
+            artwork: [{ src: 'assets/icons/favicon.svg', sizes: '512x512', type: 'image/svg+xml' }]
         });
 
         // ✅ Android bridge (solo se ejecuta si está en la app, no afecta la web)

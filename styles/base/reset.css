@@ -12,14 +12,18 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
   font-family: var(--font-main);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
 }
 
@@ -43,6 +47,15 @@ img {
   height: 45px;
 }
 
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -54,8 +67,6 @@ img {
 .detail-header {
   user-select: none;
 }
-
- 
 
 ::-webkit-scrollbar {
   width: 4px;

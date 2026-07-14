@@ -1,3 +1,8 @@
+/* --- UTILIDAD PARA BLOQUEO DE SCROLL --- */
+#app.no-scroll {
+  overflow: hidden !important;
+  touch-action: none;
+}
 /* --- OVERLAY --- */
 .settings-overlay {
   position: fixed;
@@ -19,8 +24,8 @@
 
 /* --- PANEL --- */
 .settings-panel {
-  position: absolute !important; /* Cambiar de fixed a absolute si es necesario */
-  top: 0 !important; /* Ahora el 0 será exactamente debajo de la barra custom */
+  position: fixed !important; 
+  top: 0 !important;
   height: 100% !important;
   right: 0;
   bottom: 0;
@@ -132,6 +137,7 @@
 .settings-panel__body {
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain; /* evita que el scroll "se filtre" al fondo al llegar al límite */
   padding: 6px 0 8px;
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-bg) transparent;

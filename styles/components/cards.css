@@ -15,13 +15,17 @@
   padding: 18px;
   border-radius: 20px;
   border: 1px solid var(--glass-border);
-  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    border-color 0.2s;
+  min-width: 0;
 }
 
 .folder-card-grid:active {
   transform: scale(0.95);
   background: var(--card-bg-hover);
-  border-color: rgba(167,139,250,0.2);
+  border-color: rgba(167, 139, 250, 0.2);
 }
 
 .folder-card-grid .f-icon {
@@ -35,18 +39,20 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
+.folder-card-grid .f-name-wrapper {
+  overflow: hidden; /* Aquí se corta visualmente lo que se sale */
+  white-space: nowrap;
+  width: 100%;
+}
 .folder-card-grid .f-name {
+  background: var(--accent-gradient);
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.88rem;
-  background: var(--accent-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .folder-card-grid .f-count {
@@ -69,8 +75,8 @@
 }
 
 .playlist-card:hover {
-  background: rgba(167,139,250,0.07);
-  border-color: rgba(167,139,250,0.2);
+  background: rgba(167, 139, 250, 0.07);
+  border-color: rgba(167, 139, 250, 0.2);
 }
 
 .playlist-name {
@@ -87,7 +93,7 @@
 
 .playlist-name:focus {
   border-color: var(--accent);
-  background: rgba(167,139,250,0.06);
+  background: rgba(167, 139, 250, 0.06);
   outline: none;
 }
 
@@ -100,10 +106,10 @@
 .playlist-card small {
   color: var(--accent);
   font-size: 0.72rem;
-  background: rgba(167,139,250,0.12);
+  background: rgba(167, 139, 250, 0.12);
   padding: 4px 9px;
   border-radius: 6px;
-  border: 1px solid rgba(167,139,250,0.2);
+  border: 1px solid rgba(167, 139, 250, 0.2);
 }
 
 #existing-playlists-container {
@@ -113,7 +119,7 @@
   padding-right: 5px;
   margin-top: 15px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(167,139,250,0.3) transparent;
+  scrollbar-color: rgba(167, 139, 250, 0.3) transparent;
 }
 
 #existing-playlists-container::-webkit-scrollbar {
@@ -121,6 +127,6 @@
 }
 
 #existing-playlists-container::-webkit-scrollbar-thumb {
-  background: rgba(167,139,250,0.3);
+  background: rgba(167, 139, 250, 0.3);
   border-radius: 10px;
 }

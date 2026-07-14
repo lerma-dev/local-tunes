@@ -1,6 +1,7 @@
 [
   "modals",
   "view-main",
+  "view-all-songs",
   "view-detail",
   "view-playlist",
   "view-playlist-full",
@@ -9,5 +10,6 @@
   "player-mini",
   "settings",
   "sidebar",
-  "feedback"
+  "feedback",
+  "tab-bar"
 ]

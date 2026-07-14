@@ -1,53 +1,31 @@
 /* --- EFECTO MARQUEE --- */
-@media (max-width: 599px) {
-  .marquee-container {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    display: block;
-  }
-
-  .marquee-text {
-    display: inline-block;
-    padding-left: 0;
-    transition: transform 0.1s linear;
-  }
-
-  .animate-marquee {
-    animation: marquee 8s linear infinite;
-    padding-left: 10%;
-  }
-
-  @keyframes marquee {
-    0% {transform: translateX(0);}
-    10% {transform: translateX(0);}
-    100% {transform: translateX(-100%);}
-  }
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  display: block;
 }
 
-@media (min-width: 600px) and (max-width: 899px) {
-  .marquee-container {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    display: block;
-  }
+.marquee-text {
+  display: inline-block;
+  padding-left: 0;
+  transition: transform 0.1s linear;
+}
 
-  .marquee-text {
-    display: inline-block;
-    padding-left: 0;
-    transition: transform 0.1s linear;
-  }
+.animate-marquee {
+  animation: marquee 10s linear infinite;
+  padding-left: 10%;
+}
 
-  .animate-marquee {
-    animation: marquee 10s linear infinite;
-    padding-left: 10%; 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
   }
-
-  @keyframes marquee {
-    0% {transform: translateX(0);}
-    10% {transform: translateX(0);} 
-    100% {transform: translateX(-100%);}
+  10% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
 
@@ -78,8 +56,12 @@
 }
 
 @keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-overlay p {
@@ -112,8 +94,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-overlay p {

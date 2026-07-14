@@ -1,45 +1,42 @@
 <!-- 1. PANTALLA PRINCIPAL -->
-<section id="view-main" style="display: block;">
-    <header class="main-header">
-        <div class="brand-text">
-            <h1>Mi Música</h1>
-        </div>
-        <div class="brand-container">
-            <button class="open-songs-favs" onclick="showFavoritesView()" title="Favoritos">
-                <l-icon name="heart"></l-icon>
-            </button>
-            <button class="create-playlist" onclick="showPlaylistsView()" title="Playlists">
-                <l-icon name="albums"></l-icon>
-            </button>
-            <button id="settings-btn" class="settings-btn">
-                <l-icon name="settings"></l-icon>
-            </button>
-        </div>
-    </header>
-    <main class="content">
-        <div class="banner-updates" id="banner-updates"></div>
-        <div class="banner-desktop" id="banner-desktop"></div>
-        
-        <div class="import-section">
-            <input type="file" id="folder-input" webkitdirectory directory multiple hidden>
-            <label for="folder-input" class="main-import-card">
-                <div class="import-icon">
-                    <l-icon name="folder-open"></l-icon>
-                </div>
-                <div class="import-info">
-                    <strong>Agregar Música</strong>
-                    <p>Seleccionar carpetas locales</p>
-                </div>
-            </label>
-        </div>
+<section id="view-main" style="display: block">
+  <header class="detail-header">
+    <div class="header-content">
+      <div class="brand-text">
+        <h1>Biblioteca</h1>
+      </div>
+    </div>
+  </header>
+  
+  <main class="content">
+    <div class="banner-updates" id="banner-updates"></div>
+    <div class="banner-desktop" id="banner-desktop"></div>
 
-        <div class="section-divider">
-            <span>Carpetas detectadas</span>
-            <div class="line"></div>
+    <div class="import-section">
+      <input
+        type="file"
+        id="folder-input"
+        webkitdirectory
+        directory
+        multiple
+        hidden
+      />
+      <label for="folder-input" class="main-import-card">
+        <div class="import-icon">
+          <l-icon name="folder-open"></l-icon>
         </div>
+        <div class="import-info">
+          <strong>Agregar Música</strong>
+          <p>Seleccionar carpetas locales</p>
+        </div>
+      </label>
+    </div>
 
-        <div id="detected-folders" class="folder-grid"></div>
-    </main>
+    <div class="section-divider">
+      <span>Carpetas importadas</span>
+      <div class="line"></div>
+    </div>
 
-    
+    <div id="detected-folders" class="folder-grid"></div>
+  </main>
 </section>

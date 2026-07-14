@@ -1,5 +1,6 @@
 <!-- SETTINGS -->
-<section id="settings_section">
+<section id="settings_section" style="display: none;">
+
   <!-- OVERLAY -->
   <div class="settings-overlay" id="settings-overlay"></div>
   <!-- SETTINGS ASIDE -->
@@ -114,25 +115,11 @@
           <div class="settings-row__icon">
             <l-icon name="musical-notes"></l-icon>
           </div>
-          <div class="settings-row__text">
+          <div class="settings-row__text" id="btn_settings_library">
             <div class="settings-row__label">Formatos admitidos</div>
-            <div class="settings-row__desc">MP3, FLAC, OGG, WAV…</div>
+            <div class="settings-row__desc">MP3, FLAC, OGG y WAV</div>
           </div>
         </div>
-        <div class="settings-row" id="setting-notifications">
-          <div class="settings-row__icon">
-            <l-icon name="notifications" id="notif-icon"></l-icon>
-          </div>
-          <div class="settings-row__text">
-            <div class="settings-row__label">Notificaciones</div>
-            <div class="settings-row__desc">Mostrar canción en notificación</div>
-          </div>
-          <label class="settings-toggle">
-            <input type="checkbox" id="toggle-notif" checked>
-            <span class="settings-toggle__track"></span>
-          </label>
-        </div>
-
       </div>
       <div class="settings-divider"></div>
 
@@ -180,7 +167,7 @@
           <div class="settings-row__icon">
             <l-icon name="info"></l-icon>
           </div>
-          <div class="settings-row__text">
+          <div class="settings-row__text" id="btn_settings_aboutMe">
             <div class="settings-row__label">Acerca de</div>
             <div class="settings-row__desc">Versión y licencias</div>
           </div>

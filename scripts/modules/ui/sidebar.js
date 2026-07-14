@@ -1,3 +1,4 @@
+// scripts/modules/ui/sidebar.js
 export function initSidebar() {
   const sidebar = document.getElementById('app-sidebar');
   if (!sidebar) return;
@@ -32,6 +33,7 @@ export function updateSidebarNav(view) {
     'main': 'nav-main',
     'favs': 'nav-favs',
     'playlists': 'nav-playlists',
+    'allSongs': 'nav-allSongs'
   };
 
   Object.values(btns).forEach(id => {

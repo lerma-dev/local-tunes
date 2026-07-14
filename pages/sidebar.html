@@ -6,24 +6,20 @@
   </div>
 
   <nav class="sidebar-nav">
-    <button
-      class="sidebar-nav-btn nav-active"
-      id="nav-main"
-      onclick="showMainView()"
-    >
-      <l-icon name="musical-notes"></l-icon>
+    <button class="sidebar-nav-btn nav-active" id="nav-main" onclick="showMainView()">
+      <l-icon name="folder-outline"></l-icon>
       Biblioteca
     </button>
+    <button class="sidebar-nav-btn" id="nav-allSongs" onclick="showAllSongs()">
+      <l-icon name="songs-outline"></l-icon>
+      Canciones
+    </button>
     <button class="sidebar-nav-btn" id="nav-favs" onclick="showFavoritesView()">
-      <l-icon name="heart"></l-icon>
+      <l-icon name="heart-outline"></l-icon>
       Favoritos
     </button>
-    <button
-      class="sidebar-nav-btn"
-      id="nav-playlists"
-      onclick="showPlaylistsView()"
-    >
-      <l-icon name="albums"></l-icon>
+    <button class="sidebar-nav-btn" id="nav-playlists" onclick="showPlaylistsView()">
+      <l-icon name="playlist-outline"></l-icon>
       Playlists
     </button>
   </nav>
@@ -35,9 +31,7 @@
     <l-icon name="folder-open"></l-icon>
     Importar carpeta
   </label>
-  <input
-    type="file"
-    id="folder-input-sidebar"
+  <input type="file" id="folder-input-sidebar"
     webkitdirectory
     directory
     multiple
@@ -45,8 +39,9 @@
   />
 
   <div class="sidebar-bottom" id="sidebar-bottom">
-    <button class="sidebar-icon-btn setting" id="setting-btn-sidebar" title="Ajustes (Alt + S)">
-      <l-icon name="settings"></l-icon>
+    <button class="sidebar-icon-btn" id="setting-btn-sidebar" title="Abrir (alt + s)">
+      <l-icon name="settings-outline"></l-icon>
+      &nbsp;Ajustes
     </button>
   </div>
 </aside>

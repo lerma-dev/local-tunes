@@ -1,23 +1,88 @@
 {
-  "name": "Reproductor de musica",
-  "short_name": "Music",
+  "id": "com.lermatech.localtunes",
+  "name": "Local Tunes (PWA)",
+  "short_name": "L-Tunes",
+  "author": "Lerma Tech, Inc",
+  "description": "Tu reproductor de música local, diseñado para la privacidad y la gestión eficiente de tu biblioteca personal sin rastreadores.",
   "start_url": "./index.html",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "portrait",
-  "background_color": "#4f3db4",
-  "theme_color": "#4f3db4",
+  "background_color": "#201c4f",
+  "theme_color": "#201c4f",
+  "categories": ["music", "utilities", "productivity"],
+  "share_target": {
+    "action": "./share-to-localtunes",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "audio",
+          "accept": ["audio/*"]
+        }
+      ]
+    }
+  },
   "icons": [
     {
-      "src": "./assets/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "./assets/icons/android/icon-512.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
       "purpose": "maskable"
     },
     {
-      "src": "./assets/icons/icon-512.png",
+      "src": "./assets/icons/desktop/icon-512.webp",
+      "type": "image/webp",
       "sizes": "512x512",
-      "type": "image/png",
       "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./assets/screenshots/mobile/screen_main.webp",
+      "sizes": "640x1314",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Vista de reproductor en móvil"
+    },
+    {
+      "src": "./assets/screenshots/mobile/screen_songs.webp",
+      "sizes": "640x1314",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Vista de todas las canciones"
+    },
+    {
+      "src": "./assets/screenshots/mobile/screen_favorites.webp",
+      "sizes": "640x1314",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Vista  de las canciones favoritas"
+    },
+    {
+      "src": "./assets/screenshots/mobile/screen_playlist_main.webp",
+      "sizes": "640x1314",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Vista de la pantalla principal de las playlist"
+    },
+    {
+      "src": "./assets/screenshots/mobile/screen_settings.webp",
+      "sizes": "640x1314",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Vista de los ajustes"
+    },
+    {
+      "src": "./assets/screenshots/desktop/desktop-view.webp",
+      "sizes": "2112x1318",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Interfaz principal en escritorio"
     }
   ]
 }

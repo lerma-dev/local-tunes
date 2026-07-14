@@ -2,22 +2,29 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Tu reproductor de música local, diseñado para la privacidad y la gestión eficiente de tu biblioteca personal sin rastreadores." />
     <title>Músic</title>
+    <!-- Detección temprana de WebView2 (.exe de escritorio) para escopar el CSS
+         de la barra de título custom (desktop-titlebar.css) solo a ese entorno
+         y evitar que afecte al navegador/PWA. Debe ir antes del <link> de CSS. -->
+    <script>
+      if (window.chrome && window.chrome.webview) {
+        document.documentElement.classList.add("native-app");
+      }
+    </script>
     <!-- ESTILOS -->
     <link rel="stylesheet" href="./styles/main.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- WEB -->
-    <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico" />
-    <meta name="theme-color" content="#4f3db4" />
+    <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg" />
+    <meta name="theme-color" content="#201c4f" />
     <!-- ANDROID -->
     <link rel="manifest" href="./manifest.json" />
     <!-- IOS -->
-    <link rel="apple-touch-icon" href="./assets/icons/icon-180.png" />
+    <link rel="apple-touch-icon" href="./assets/icons/ios/icon-180.webp" />
     <meta name="apple-mobile-web-app-title" content="Music" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#4f3db4" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#201c4f" />
   </head>
   <body>
     <div id="desktop-titlebar" style="display: none"></div>

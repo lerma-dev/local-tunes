@@ -1,37 +1,39 @@
 // app/scripts/modules/components/banner-updates.js
 let bannerUpdatesElement;
 
-export const initbannerUpdates = () => {
+export const initBannerUpdates = () => {
   bannerUpdatesElement = document.getElementById("banner-updates");
   if (bannerUpdatesElement) bannerUpdatesElement.style.display = "none";
 
   if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
-    navigator.serviceWorker.getRegistration().then((reg) => {
-      // Verificamos si reg existe antes de usarlo
-      if (!reg) return;
+    navigator.serviceWorker
+      .getRegistration()
+      .then((reg) => {
+        // Verificamos si reg existe antes de usarlo
+        if (!reg) return;
 
-      if (reg.waiting) {
-        showBannerUpdates();
-        return;
-      }
+        if (reg.waiting) {
+          showBannerUpdates();
+          return;
+        }
 
-      reg.addEventListener("updatefound", () => {
-        const installingWorker = reg.installing;
-        if (!installingWorker) return;
+        reg.addEventListener("updatefound", () => {
+          const installingWorker = reg.installing;
+          if (!installingWorker) return;
 
-        installingWorker.addEventListener("statechange", () => {
-          if (
-            installingWorker.state === "installed" &&
-            navigator.serviceWorker.controller
-          ) {
-            showBannerUpdates();
-          }
+          installingWorker.addEventListener("statechange", () => {
+            if (
+              installingWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              showBannerUpdates();
+            }
+          });
         });
+      })
+      .catch((err) => {
+        console.error("Error al obtener el registro del Service Worker:", err);
       });
-    })
-    .catch((err) => {
-      console.error("Error al obtener el registro del Service Worker:", err);
-    });
   }
 };
 
@@ -40,7 +42,7 @@ export const showBannerUpdates = () => {
   bannerUpdatesElement.style.display = "flex";
   bannerUpdatesElement.innerHTML = `
   <div class="content-update">
-    <img src="assets/icons/icon-192.png" alt="updates" class="updates-icon">
+    <img src="assets/icons/favicon.svg" alt="updates" class="updates-icon">
     <span>
       <strong>¡Nueva actualización esperándote!</strong><br>
       <i>No te pierdas las mejoras — actualiza ahora y sigue disfrutando tu música.</i>

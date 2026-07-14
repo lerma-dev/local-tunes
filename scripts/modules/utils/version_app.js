@@ -32,7 +32,7 @@ export const initVersionApp = () => {
     }
 
     if (tag_version) {
-      tag_version.textContent = `Mi Música v${version} (${appChannel})`;
+      tag_version.textContent = `Local Tunes v${version} (${appChannel})`;
     }
   };
 

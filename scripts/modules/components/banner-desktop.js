@@ -1,85 +1,85 @@
 // app/scripts/modules/components/banner-desktop.js
-function showSecurityModal() {
-  const container = document.getElementById("aviso-seguridad");
+import { showModal } from "./modal.js";
 
-  const modal = document.createElement("div");
-  modal.id = "modal-download-info";
-  modal.className = "modal-overlay";
+function toggleBannerVisibility() {
+  const banner = document.getElementById("banner-desktop");
+  if (!banner) return;
 
-  modal.innerHTML = `
-    <div class="modal-content">
-      <h3>Aviso de seguridad</h3>
-      <p>La descarga iniciará en un momento. Windows podría mostrar una advertencia de "Editor desconocido".</p>
-      <p class="es-seguro">
-        <strong>Para instalarla:</strong> Haz clic en "Más información" y luego en "Ejecutar de todas formas".
-      </p>
-      <p>
-        <em>Mi software es seguro y ha sido compilado por mí.</class=em>
-      </p>
-      <div class="modal-actions">
-        <button class="confirm-btn confirm-btn--success" id="btn-confirm-download">Entendido, descargar</button>
-        <button class="confirm-btn confirm-btn--cancel"  id="btn-cancel-download">Cancelar</button>
-      </div>
-    </div>
-  `;
+  const isDesktop =
+    window.matchMedia("(min-width: 1024px)").matches &&
+    !("ontouchstart" in window);
+  const isMobile = window.matchMedia(
+    "(min-width: 320px) and (max-width: 768px)",
+  ).matches;
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches;
 
-  container.appendChild(modal);
-  const confirmDown = document.getElementById("btn-confirm-download");
-  const cancelDown = document.getElementById("btn-cancel-download");
-  confirmDown.addEventListener("click", () => {
-    window.location.href =
-      "https://github.com/lerma-dev/music-pwa/releases/download/v1.6.6/local_tunes_v1.6.6.exe";
-    modal.remove();
-  });
+  const closedTime = parseInt(localStorage.getItem("banner-closed"));
+  const unDiaEnMs = 24 * 60 * 60 * 1000;
+  if (closedTime && Date.now() - closedTime < unDiaEnMs) {
+    banner.style.display = "none";
+    return;
+  }
 
-  cancelDown.addEventListener("click", () => {
-    modal.remove();
-  });
+  // Si no cumple las condiciones, ocultar
+  if (!isDesktop || isMobile || isStandalone || window.chrome?.webview) {
+    banner.style.display = "none";
+  } else {
+    // Si es desktop y no ha sido cerrado, mostrar
+    banner.style.display = "flex";
+  }
 }
 
 export const initDesktopBanner = () => {
   const banner = document.getElementById("banner-desktop");
   if (!banner) return;
 
-  // Verificar si es escritorio (simple check de ancho o touch)
-  const isDesktop =
-    window.matchMedia("(min-width: 1024px)").matches &&
-    !("ontouchstart" in window);
-
-  // Ocultar si es móvil o si ya está instalado
-  if (
-    !isDesktop ||
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.chrome.webview
-  ) {
-    banner.style.display = "none";
-    return;
-  }
-
-  // Mostrar banner
-  banner.style.display = "flex";
+  // Estructura simplificada
   banner.innerHTML = `
-  <div class="desktop-banner-content">
-    <l-icon name="desktop-outline"></l-icon>
-    <p>
-      <strong>¿Prefieres la versión de escritorio?</strong><br>
-      Instala nuestra app para una mejor experiencia local.
-    </p>
-    <button id="btn-download-exe"> 
-      Descargar 
+    <div class="content-info">
+      <div class="icono">
+        <l-icon name="desktop-outline"></l-icon>
+      </div>
+      <div>
+        <div class="titulo">¿Prefieres la versión de escritorio?</div>
+        <div class="descripcion">Instala nuestra app para una mejor experiencia local.  Haz Click Aquí</div>
+      </div>
+    </div>
+    <button id="btn-close-banner" class="btn_close"> 
+      <l-icon name="close"></l-icon> 
     </button>
-    <button id="btn-close-banner">
-      <l-icon name="close"></l-icon>
-    </button>
-  </div>
   `;
 
-  const download = document.getElementById("btn-download-exe");
-  download.addEventListener("click", () => {
-    showSecurityModal();
+  const closeBtn = document.getElementById("btn-close-banner");
+
+  // El banner dispara el modal, pero EXCLUIMOS el botón de cerrar
+  banner.addEventListener("click", (e) => {
+    // Si el clic fue en el botón de cerrar, no hacemos nada (el listener de abajo lo maneja)
+    if (e.target.closest("#btn-close-banner")) return;
+
+    showModal({
+      title: "Aviso de seguridad",
+      message: `La descarga iniciará en un momento. 
+        Windows podría mostrar una advertencia de <strong>'Editor desconocido'</strong>. 
+        Para instalarla, haz clic en <strong>'Más información'</strong> y luego en <strong>'Ejecutar de todas formas'</strong>.`,
+      buttons: [
+        {
+          text: "Descargar",
+          action: () => {
+            window.location.href =
+              "https://github.com/lerma-dev/local-tunes/releases/download/v1.6.6/local_tunes_v1.6.6.exe";
+          },
+        },
+        { text: "Cancelar", action: null },
+      ],
+    });
   });
 
-  document.getElementById("btn-close-banner").addEventListener("click", () => {
+  closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // Evita que se dispare el modal al cerrar
     banner.style.display = "none";
+    localStorage.setItem("banner-closed", Date.now().toString());
   });
+
+  toggleBannerVisibility();
+  window.addEventListener("resize", toggleBannerVisibility);
 };
