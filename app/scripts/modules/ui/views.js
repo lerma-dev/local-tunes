@@ -2,6 +2,7 @@ import { state } from '../utils/state.js';
 import { renderSongs } from '../components/songs.js';
 import { renderFavorites } from '../components/favorites.js';
 import { renderAllPlaylists } from '../components/playlists.js';
+import {renderAllSongs} from '../components/all-songs.js';
 import { updateSidebarNav } from './sidebar.js';
 
 export const loadingOverlay = document.getElementById('loading-overlay');
@@ -13,10 +14,15 @@ function isDesktop() {
 
 // En desktop: hide todas las secciones de contenido, luego muestra la indicada
 function hideAllViews() {
-    ['view-main','view-detail','view-songs-favs','view-playlist','view-playlist-full'].forEach(id => {
+    ['view-main','view-detail','view-songs-favs','view-playlist','view-playlist-full', 'view-all-songs'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
     });
+    // Ajustes es un overlay, no una vista más, pero si estaba abierto al
+    // cambiar de vista, hay que cerrarlo para que no quede empalmado.
+    if (typeof window.closeSettingsPanel === 'function') {
+        window.closeSettingsPanel();
+    }
 }
 
 export function showDetailView(name) {
@@ -35,6 +41,12 @@ export function showMainView() {
     updateSidebarNav('main');
 }
 
+export function showAllSongs() {
+    hideAllViews();
+    document.getElementById('view-all-songs').style.display = "block";
+    renderAllSongs();
+    updateSidebarNav('allSongs');
+}
 export function showFavoritesView() {
     hideAllViews();
     document.getElementById('view-songs-favs').style.display = 'block';
@@ -74,6 +86,7 @@ export function hideFullPlayer() {
 
 // Exponer globalmente
 window.showMainView      = showMainView;
+window.showAllSongs      = showAllSongs;
 window.showDetailView    = showDetailView;
 window.showFavoritesView = showFavoritesView;
 window.showPlaylistsView = showPlaylistsView;

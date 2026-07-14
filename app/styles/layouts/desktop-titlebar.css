@@ -1,3 +1,7 @@
+/* Shell base de la app: esto SÍ debe aplicar en todas las plataformas
+   (navegador, PWA y .exe) — es lo que hace que #app ocupe toda la pantalla.
+   Lo único exclusivo del .exe (WebView2) es el descuento de 32px para la
+   barra de título custom, ver la regla html.native-app #app más abajo. */
 body {
   margin: 0;
   padding: 0px;
@@ -26,6 +30,7 @@ body {
   user-select: none;
   z-index: 99999 !important;
   box-sizing: border-box;
+  -webkit-app-region: drag;
 }
 
 .title-container {
@@ -51,7 +56,7 @@ body {
 #app {
   flex-grow: 1 !important;
   width: 100% !important;
-  height: calc(100vh - 32px) !important;
+  height: 100vh !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   position: relative !important;
@@ -64,18 +69,10 @@ body {
   box-sizing: border-box;
 }
 
-#app::-webkit-scrollbar {
-  width: 8px;
-}
-#app::-webkit-scrollbar-track {
-  background: #130626;
-}
-#app::-webkit-scrollbar-thumb {
-  background: #2a114d;
-  border-radius: 4px;
-}
-#app::-webkit-scrollbar-thumb:hover {
-  background: #a176ff;
+/* Único ajuste exclusivo del .exe: restar los 32px de la barra de título
+   custom para que #app no quede tapado detrás de ella. */
+html.native-app #app {
+  height: calc(100vh - 32px) !important;
 }
 
 /* controles */

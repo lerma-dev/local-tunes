@@ -1,6 +1,8 @@
 // app/sw.js
-const CACHE_NAME = "music-v1.6.8";
+const CACHE_NAME = "music-v2.0.0";
 const APP_VERSION = CACHE_NAME.replace("music-v", "");
+const SHARE_DB_NAME = "MusicAppDB";
+const SHARE_STORE_NAME = "library_meta";
 
 const ASSETS = [
   "./",
@@ -52,6 +54,17 @@ self.addEventListener("activate", (e) => {
 
 // fetch - estrategia cache-first
 self.addEventListener("fetch", (e) => {
+
+  const requestUrl = new URL(e.request.url);
+  if (e.request.method === "POST" && requestUrl.pathname.endsWith("/share-to-localtunes")) {
+    e.respondWith(handleShareTarget(e.request));
+    return;
+  }
+
+  // EXCEPCIÓN: No cachear nunca el archivo de verificación de Google
+  if (e.request.url.includes('.well-known/assetlinks.json')) {
+    return; // Esto hace que el navegador use la red directamente
+  }
   e.respondWith(
     caches.match(e.request).then((res) => {
       return (
@@ -69,6 +82,48 @@ self.addEventListener("fetch", (e) => {
     }),
   );
 });
+
+async function handleShareTarget(request) {
+  try {
+    const formData = await request.formData();
+    const sharedFiles = formData
+      .getAll("audio")
+      .filter((f) => f instanceof File && /\.(mp3|wav|ogg|m4a)$/i.test(f.name));
+
+    if (sharedFiles.length > 0) {
+      const db = await openShareDB();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(SHARE_STORE_NAME, "readwrite");
+        tx.objectStore(SHARE_STORE_NAME).put({
+          id: "incoming_share",
+          // El File es un Blob válido para structured clone en IndexedDB
+          files: sharedFiles.map((f) => ({ name: f.name, type: f.type, blob: f })),
+          receivedAt: Date.now(),
+        });
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+  } catch (error) {
+    console.error("[SW][ShareTarget] Error al procesar el contenido compartido:", error);
+  }
+
+  return Response.redirect(new URL("./index.html", self.registration.scope).href, 303);
+}
+
+function openShareDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(SHARE_DB_NAME, 1);
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(SHARE_STORE_NAME)) {
+        db.createObjectStore(SHARE_STORE_NAME, { keyPath: "id" });
+      }
+    };
+    request.onsuccess = (e) => resolve(e.target.result);
+    request.onerror = (e) => reject(e.target.result);
+  });
+}
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.action === "skipWaiting") {

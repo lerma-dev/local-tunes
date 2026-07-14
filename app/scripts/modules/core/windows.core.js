@@ -27,7 +27,7 @@ function renderTitleBar() {
 
   titlebar.innerHTML = `
   <div class="title-container">
-    <img src="./assets/icons/favicon.ico" class="logo-titlebar" alt="Logo" /> 
+    <img src="./assets/icons/favicon.svg" class="logo-titlebar" alt="Logo" /> 
     <div class="title">Local Tunes</div>
   </div>
   <div class="window-controls">
@@ -138,6 +138,12 @@ export function initTitlebar() {
 
   // Detectamos si estamos dentro del WebView2 de Microsoft
   if (window.chrome?.webview) {
+    // Marca <html> (igual que el script inline en index.html) para que el CSS
+    // de la barra de título custom (desktop-titlebar.css) solo se aplique
+    // aquí, no en navegador/PWA. classList.add es idempotente si ya se
+    // agregó desde el script inline.
+    document.documentElement.classList.add("native-app");
+
     window.modeDesktopActive = () => {
       isDesktop = true;
 

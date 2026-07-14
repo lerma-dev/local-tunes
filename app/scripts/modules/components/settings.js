@@ -13,15 +13,60 @@ import {
   checkVersionChange,
 } from "../utils/backup.js";
 import { initVersionApp } from "../utils/version_app.js";
+import { agregarToast } from "./toast.js";
+import { showModal } from "./modal.js";
 let settingsInitialized = false;
+let lockedScrollTop = 0;
+let hideSectionTimeout = null;
+// Debe coincidir con la transición más larga del panel (.settings-panel: 0.38s)
+const CLOSE_ANIM_MS = 400;
+
+function lockBodyScroll() {
+  const appEl = document.getElementById("app");
+  if (!appEl) return;
+  lockedScrollTop = appEl.scrollTop;
+  appEl.classList.add('no-scroll');
+}
+
+function unlockBodyScroll() {
+  const appEl = document.getElementById("app");
+  if (!appEl) return;
+  appEl.classList.remove('no-scroll');
+  appEl.scrollTop = lockedScrollTop;
+}
+
+function showSettingsSection() {
+  const section = document.getElementById("settings_section");
+  if (!section) return;
+  if (hideSectionTimeout) {
+    clearTimeout(hideSectionTimeout);
+    hideSectionTimeout = null;
+  }
+  section.style.display = "block";
+}
+
+function hideSettingsSectionAfterAnim() {
+  const section = document.getElementById("settings_section");
+  if (!section) return;
+  if (hideSectionTimeout) clearTimeout(hideSectionTimeout);
+  hideSectionTimeout = setTimeout(() => {
+    section.style.display = "none";
+    hideSectionTimeout = null;
+  }, CLOSE_ANIM_MS);
+}
 
 function openSettings() {
+  showSettingsSection();
   document.getElementById("settings-panel").classList.add("is-open");
   document.getElementById("settings-overlay").classList.add("is-open");
+  // Bloquea el scroll del fondo
+  lockBodyScroll();
 }
 export function openSettingsHandler() {
+  showSettingsSection();
   document.getElementById("settings-panel").classList.add("is-open");
   document.getElementById("settings-overlay").classList.add("is-open");
+  lockBodyScroll();
   checkBackupReminder();
   checkVersionChange();
 }
@@ -32,6 +77,8 @@ export function initSettings() {
   const panel = document.getElementById("settings-panel");
   const overlay = document.getElementById("settings-overlay");
   const closeBtn = document.getElementById("settings-close-btn");
+  const libraryBtn = document.getElementById("btn_settings_library");
+  const aboutMeBtn = document.getElementById("btn_settings_aboutMe");
 
   window.abrirAjustes = openSettingsHandler;
 
@@ -49,6 +96,45 @@ export function initSettings() {
     });
   }
 
+  // -- Boton de biblioteca
+  libraryBtn.addEventListener("click", () => {
+    agregarToast({
+      tipo: "Info",
+      titulo: "¿Problemas para compartir?",
+      descripcion: "La función de compartir archivos en Windows funciona mejor en Microsoft Edge. Si usas otro navegador, usa el botón de importar en la pantalla principal.",
+      autoClose: true,
+    });
+  });
+
+  // -- Boton de acerca de 
+  aboutMeBtn.addEventListener("click", () => {
+    const version = localStorage.getItem("appVersion") || "0.0.0";
+    showModal({
+      title: `
+      <div text-align: center; display: flex; align-item: center; justify-content: center; gap:4px;>
+        <img src='./assets/icons/favicon.svg' alt="icono" style='width: 30px; height: 30px;'>
+        Acerca de Local Tunes
+      </div>
+      `,
+      message: `
+          <p>Versión: <strong>${version}</strong></p>
+          <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+            © 2026 Hector Lerma. Todos los derechos reservados.
+          </p>
+          <p style="margin-top: 15px; font-size: 0.85em;">
+            Software de propiedad intelectual de Hector Lerma. 
+            Uso permitido únicamente para fines de estudio personal y aprendizaje.
+          </p>
+      `,
+      buttons: [
+        {
+          text: "Cerrar",
+          action: null
+        }
+      ]
+    });
+  });
+
   // --- Botón de móvil ---
   const mobileBtn = document.getElementById("settings-btn");
   if (mobileBtn) {
@@ -63,7 +149,10 @@ export function initSettings() {
   function closeSettings() {
     panel.classList.remove("is-open");
     overlay.classList.remove("is-open");
+    unlockBodyScroll();
+    hideSettingsSectionAfterAnim();
   }
+  window.closeSettingsPanel = closeSettings;
 
   closeBtn.addEventListener("click", closeSettings);
   overlay.addEventListener("click", closeSettings);
@@ -71,7 +160,7 @@ export function initSettings() {
   document.addEventListener("keydown", (e) => {
     if (e.altKey && e.key.toLowerCase() === "s") {
       e.preventDefault();
-      openSettings();
+      openSettings();  
     }
     if (e.key === "Escape") {
       closeSettings();
@@ -93,16 +182,6 @@ export function initSettings() {
     sincronizarFondoConCSharp();
   });
 
-  // --- Toggle: Notificaciones ---
-  const toggleNotif = document.getElementById("toggle-notif");
-  const notifIcon = document.getElementById("notif-icon");
-
-  toggleNotif.addEventListener("change", () => {
-    notifIcon.setAttribute(
-      "name",
-      toggleNotif.checked ? "notifications" : "notifications-off",
-    );
-  });
 
   state.playMode = getStoredMode();
   syncModeIcon();

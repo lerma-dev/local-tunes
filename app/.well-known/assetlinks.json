@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.lermatech.localtunes",
+      "sha256_cert_fingerprints":[
+        "35:5E:E2:34:33:5A:FE:53:1A:7D:F7:4E:C5:11:FF:05:DF:BC:30:11:E6:C5:19:0A:C1:1A:92:EE:9E:2E:37:33"
+      ]
+    }
+  }
+]

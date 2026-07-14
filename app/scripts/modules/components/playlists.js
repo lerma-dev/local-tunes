@@ -195,6 +195,7 @@ export async function renderSongPlaylist(playlistId, filterText = "") {
 
         const fragment = document.createDocumentFragment();
         canciones.forEach((song) => {
+            if (!song) return;
             const RealIndex = playlist.data.song.indexOf(song);
             const isPlaying = RealIndex === state.currentIndex && state.currentIndex !== -1;
             const li = document.createElement('li');
