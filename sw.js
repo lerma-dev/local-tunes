@@ -8,7 +8,7 @@ const ASSETS = [
   "./index.html",
   "./styles/main.css",
   "./scripts/app.js",
-  "./scripts/icons.js", 
+  "./scripts/icons.js",
   "./manifest.json",
 ];
 
@@ -31,22 +31,34 @@ self.addEventListener("activate", (e) => {
           }),
         );
       })
-      .then(() => {
-        // Notificar a todos los clientes inmediatamente
-        return self.clients.matchAll({
-          includeUncontrolled: true,
-          type: "window",
-        });
-      })
   );
   return self.clients.claim();
 });
 
 // fetch - estrategia cache-first
 self.addEventListener("fetch", (e) => {
+  e.respondWith(
+    caches.match(e.request).then((res) => {
+      return (
+        res ||
+        fetch(e.request).then((newRes) => {
+          // cachear si la respuesta es válida
+          if (!newRes || newRes.status !== 200) return newRes;
+
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(e.request, newRes.clone());
+            return newRes;
+          });
+        })
+      );
+    }),
+  );
 
   const requestUrl = new URL(e.request.url);
-  if (e.request.method === "POST" && requestUrl.pathname.endsWith("/share-to-localtunes")) {
+  if (
+    e.request.method === "POST" &&
+    requestUrl.pathname.endsWith("/share-to-localtunes")
+  ) {
     e.respondWith(handleShareTarget(e.request));
     return;
   }
@@ -66,7 +78,11 @@ async function handleShareTarget(request) {
         tx.objectStore(SHARE_STORE_NAME).put({
           id: "incoming_share",
           // El File es un Blob válido para structured clone en IndexedDB
-          files: sharedFiles.map((f) => ({ name: f.name, type: f.type, blob: f })),
+          files: sharedFiles.map((f) => ({
+            name: f.name,
+            type: f.type,
+            blob: f,
+          })),
           receivedAt: Date.now(),
         });
         tx.oncomplete = resolve;
@@ -74,10 +90,16 @@ async function handleShareTarget(request) {
       });
     }
   } catch (error) {
-    console.error("[SW][ShareTarget] Error al procesar el contenido compartido:", error);
+    console.error(
+      "[SW][ShareTarget] Error al procesar el contenido compartido:",
+      error,
+    );
   }
 
-  return Response.redirect(new URL("./index.html", self.registration.scope).href, 303);
+  return Response.redirect(
+    new URL("./index.html", self.registration.scope).href,
+    303,
+  );
 }
 
 function openShareDB() {

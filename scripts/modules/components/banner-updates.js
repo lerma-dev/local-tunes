@@ -3,7 +3,6 @@ let bannerUpdatesElement;
 
 export const initBannerUpdates = () => {
   bannerUpdatesElement = document.getElementById("banner-updates");
-  if (bannerUpdatesElement) bannerUpdatesElement.style.display = "none";
 
   if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
     navigator.serviceWorker
@@ -50,7 +49,7 @@ export const showBannerUpdates = () => {
     <button class="whats-new-btn" id="btn-whats-new">
       <l-icon name="sparkles"></l-icon>
     </button>
-  </div>
+  </div>d
   `;
 
   document.getElementById("btn-whats-new").addEventListener("click", () => {
