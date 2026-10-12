@@ -1,4 +1,5 @@
 .banner-updates {
+  display: none;  
   background: var(--accent-gradient-soft);
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
