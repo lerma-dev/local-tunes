@@ -12,7 +12,7 @@ Un reproductor de música web de alto rendimiento diseñado para gestionar libre
   <img src="https://img.shields.io/badge/Get_it_on-GitHub_Pages-bc13fe?style=for-the-badge&logo=github&logoColor=white" alt="Get it on GitHub Pages">
 </a>
 
-<a href="https://github.com/lerma-dev/local-tunes/releases/download/v1.6.6/local_tunes_v1.6.6.exe">
+<a href="https://github.com/lerma-dev/local-tunes-desktop/releases/download/v1.0.0/local-tunes-v1.0.0-Universal.exe">
   <img src="https://img.shields.io/badge/Dowload_for-WINDOWS-0078D4?style=for-the-badge&logoColor=white&labelColor=555555" alt="Download for Windows">
 </a>
 
@@ -127,3 +127,23 @@ python3 -m http.server 3300 --directory app
 Abre tu navegador en http://localhost:3300.
 
 > **Nota:** Los scripts `.bat` y `.sh` lanzarán la aplicación directamente en http://localhost:3300. Los logs del servidor se guardan automáticamente en un archivo `server.log`; si prefieres ver la salida en tiempo real en la terminal, puedes ejecutar el comando manualmente.
+
+---
+
+## 🤝 Contribuir
+
+Las contribuciones se reciben **solo mediante Pull Request** hacia la rama `main`. Lee la guía completa en [CONTRIBUTING.md](CONTRIBUTING.md). Solo el mantenedor crea tags, releases y despliegues a `beta` y `prod`.
+
+Para reportar un fallo o sugerir una idea sin código, abre un Issue o escribe en el portal: **lermatech.onrender.com**.
+
+## 🖥️ Versión de escritorio
+
+Local Tunes también tiene una app nativa para Windows que embebe esta interfaz web: [lerma-dev/local-tunes-desktop](https://github.com/lerma-dev/local-tunes-desktop). Si quieres trabajar en ella en modo Debug, necesitas tener este servidor corriendo en el puerto `3300`.
+
+## 📄 Licencia
+
+Copyright © 2026 lerma.dev (Héctor Lerma). **Todos los derechos reservados.**
+
+El código puede visualizarse y hacerse *fork* únicamente con fines de estudio personal, aprendizaje y para proponer contribuciones mediante Pull Request. Está prohibida su distribución, su uso comercial, su redistribución modificada y la publicación de releases o instaladores. Consulta los detalles completos en [LICENSE.md](LICENSE.md).
+
+© 2026 lerma-dev (Héctor Lerma)
