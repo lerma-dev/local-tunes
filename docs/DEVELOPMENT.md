@@ -14,7 +14,7 @@ Esta guía explica la arquitectura interna del reproductor y el flujo de desplie
   * `/assets/`: fuentes, íconos, íconos propios (`lerma-icons/`) y capturas.
   * `/scripts/`: lógica JavaScript modularizada (ver abajo).
 * `/docs/`: documentación técnica del proyecto.
-* `start_app.sh` / `start_app.bat`: scripts para levantar el servidor local en el puerto 3300.
+* `server.py`: script para levantar el servidor local en el puerto 3300.
 
 ### Módulos de JavaScript (`/app/scripts/modules/`)
 
@@ -65,12 +65,23 @@ Para forzar la actualización del Service Worker cuando hay cambios críticos:
 3. Al aceptar, se envía al worker en espera el mensaje `{ action: "skipWaiting" }`.
 4. `sw.js` recibe el mensaje y ejecuta `self.skipWaiting()` para activar el nuevo worker de inmediato.
 
-## 🖥️ Integración con la app de escritorio
+---
 
-La interfaz detecta si corre dentro del contenedor de escritorio (WebView2) comprobando `window.chrome.webview`. Esa lógica está en `core/windows.core.js` y permite:
+## 🖥️ Integración con la app de escritorio (v1.0.0)
 
-* **Web → escritorio:** enviar con `window.chrome.webview.postMessage` comandos como cerrar, minimizar, maximizar, arrastrar la ventana, cambiar entre barra personalizada y nativa, sincronizar el color de fondo y mostrar el menú de sistema.
-* **Escritorio → web:** `app.js` expone `window.togglePlay`, `window.playNext` y `window.playPrev`, que usa el menú de la bandeja del sistema. **No cambies estos nombres** sin actualizar también la app de escritorio.
+En la versión 1.0.0 de Local Tunes Desktop, la interfaz web utiliza una detección automática para verificar si se está ejecutando dentro del contenedor de escritorio (WebView2) comprobando `window.chrome.webview`. Dicha lógica en `core/windows.core.js` permite:
+
+- **Web → Escritorio:** enviar comandos mediante `window.chrome.webview.postMessage` (cerrar, minimizar, maximizar, arrastrar ventana, barra de título y menú de sistema).
+- **Escritorio → Web:** exponer en `app.js` los métodos globales `window.togglePlay`, `window.playNext` y `window.playPrev` para controlarlos desde la bandeja del sistema.
+
+> ⚠️ **Nota:** Esta detección y su lógica correspondiente **solo se utilizan si se instala la versión 1.0.0**, ya que en versiones posteriores (`1.0.1+`) los assets se empaquetan de forma local y esta interoperabilidad se gestiona directamente en el entorno nativo.
+
+## 🏛️ Arquitectura de Assets y Core (v1.0.0+)
+
+A partir de la versión 1.0.0 de **Local Tunes Desktop**, se reestructuró la distribución de recursos y la estabilidad del núcleo:
+
+- **Congelación del Core (Core Freeze):** Los módulos base (`app/scripts/modules/core/index.js` y `app/scripts/modules/core/windows.core.js`) se mantienen en estado estático para garantizar la retrocompatibilidad con la aplicación nativa y evitar rupturas en el puente WebView2.
+- **Assets Locales Bundled (`web_assets`):** Toda la estructura contenida en `app/` se empaqueta y distribuye localmente en el cliente de escritorio. Esto elimina las peticiones a repositorios o archivos comprimidos remotos, garantiza un tiempo de inicio inmediato (splash screen) y facilita el acceso offline con APIs nativas.
 
 ## 🌎 Flujo de Despliegue Limpio (Subtrees)
 

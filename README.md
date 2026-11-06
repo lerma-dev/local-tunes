@@ -67,7 +67,7 @@ code .
 > - **Windows:**
 >   `winget install Python.Python.3`
 > - **Linux (Ubuntu/Debian):**
->   `sudo apt update && sudo apt install -y python3`
+>   `sudo apt update && sudo apt install -y python`
 > - **macOS (Homebrew):**
 >   `brew install python`
 
@@ -84,49 +84,19 @@ py --version
 
 ### 2. Inicia el servidor según tu sistema operativo:
 
-- **Windows (CMD)**
-
-```bash
-start_app
-```
-
 - **Windows (Git Bash / PowerShell)**
-
 ```bash
-./start_app.sh
-# O tambien
-./start_app.bat
+py server.py
 ```
 
 - **Linux / macOS**
-  Asegúrate de dar permisos de ejecución la primera vez:
-
 ```bash
-chmod +x start_app.sh
-./start_app.sh
-```
-
-### 3. Método Manual (Python)
-
-- **Si prefieres no usar scripts, ejecuta el servidor nativo:**
-
-**En windows**
-
-```bash
-py -m http.server 3300 --directory app
-```
-
-**En Mac/linux**
-
-```bash
-python3 -m http.server 3300 --directory app
+python3 server.py
 ```
 
 ### 4. Accede a la App:
 
 Abre tu navegador en http://localhost:3300.
-
-> **Nota:** Los scripts `.bat` y `.sh` lanzarán la aplicación directamente en http://localhost:3300. Los logs del servidor se guardan automáticamente en un archivo `server.log`; si prefieres ver la salida en tiempo real en la terminal, puedes ejecutar el comando manualmente.
 
 ---
 
