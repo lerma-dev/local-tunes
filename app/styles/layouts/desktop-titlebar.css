@@ -51,7 +51,7 @@ body {
   user-select: none;
 }
 
-#app {
+.native-app #app {
   flex-grow: 1 !important;
   width: 100% !important;
   height: 100vh !important;
@@ -61,8 +61,8 @@ body {
   box-sizing: border-box;
 }
 
-#app > div,
-#app > section {
+.native-app #app > div,
+.native-app #app > section {
   max-height: 100% !important;
   box-sizing: border-box;
 }
