@@ -4,8 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Tu reproductor de música local, diseñado para la privacidad y la gestión eficiente de tu biblioteca personal sin rastreadores." />
+    <meta name="theme-color" content="#201c4f" />
     <title>Local Tunes</title>
     <script>
+      requestAnimationFrame(() => {
+        const loadingScreen = document.getElementById("loading-screen");
+        if (loadingScreen) {
+          loadingScreen.classList.add("fade-out");
+          setTimeout(() => loadingScreen.remove(), 1000);
+        }
+      });
       if (window.chrome && window.chrome.webview) {
         document.documentElement.classList.add("native-app");
       }
@@ -18,25 +26,32 @@
         }catch (e) {
           console.error("Error al obtener la versión:", e);
         }
-      }
+      };
       version();
     </script>
-    <!-- ESTILOS -->
-    <link rel="stylesheet" href="./styles/main.css" />
-    <!-- WEB -->
     <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg" />
-    <meta name="theme-color" content="#201c4f" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/loading.css"/>
+    <link rel="stylesheet" href="./styles/layouts/desktop-titlebar.css" />
     <!-- ANDROID -->
     <link rel="manifest" href="./manifest.json" />
     <!-- IOS -->
     <link rel="apple-touch-icon" href="./assets/icons/icon-180.webp" />
-    <meta name="apple-mobile-web-app-title" content="Music" />
+    <meta name="apple-mobile-web-app-title" content="L-Tunes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#201c4f" />
   </head>
   <body>
-    <div id="desktop-titlebar" style="display: none"></div>
-
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-content">
+        <img src="./assets/icons/animate-icon.svg" alt="Local Tunes Logo" class="loading-logo" />
+        <h1 class="loading-title">Local Tunes</h1>
+        <p class="loading-subtitle">
+          Tu reproductor de música local, diseñado para la privacidad y la gestión eficiente de tu biblioteca personal sin rastreadores.
+        </p>
+      </div>
+    </div>
+    
     <div id="app"></div>
     <audio id="audio-engine"></audio>
 
