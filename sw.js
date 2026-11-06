@@ -1,5 +1,5 @@
 // app/sw.js
-const CACHE_NAME = "v2.0.2";
+const CACHE_NAME = "v2.0.3";
 const SHARE_DB_NAME = "MusicAppDB";
 const SHARE_STORE_NAME = "library_meta";
 
