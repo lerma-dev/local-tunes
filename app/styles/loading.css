@@ -1,0 +1,51 @@
+/* Contenedor principal de la pantalla de carga (fondo oscuro y centrado) */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #130e47;
+  z-index: 9999;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #fff;
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none; /* Evita que interfiera con los clics mientras se desvanece */
+}
+
+/* Caja de contenido alineada al centro */
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  max-width: 400px;
+}
+
+.loading-logo {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 1.25rem;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.4));
+}
+.loading-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, #70f9f3, #325ed8, #eb81ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.loading-subtitle {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #c6cacf;
+  margin: 0 0 1.5rem 0;
+}
