@@ -21,20 +21,14 @@ function sendCommand(accion) {
 
 
 function renderTitleBar() {
+  const bar = document.createElement("div");
+  bar.id = "desktop-titlebar";
+  document.body.appendChild(bar);
+
   titlebar = document.getElementById("desktop-titlebar");
   if (!titlebar) return;
-  const isLinux = titlebar.classList.contains("linux");
 
-  let iconClose = "close";
-  let iconMinimize = "chevron-down";
-  let iconMaximize = isMaximized ? "restore" : "maximize";
-
-  if (isLinux) {
-    iconClose = "close-native";
-    iconMinimize = "minimize-native";
-    iconMaximize = isMaximized ? "restore-native" : "maximize-native";
-  }
-
+  const actionIcon = isMaximized ? "restore-native" : "maximize-native";
   const actionText = isMaximized ? "Restore" : "Maximize";
 
   titlebar.innerHTML = `
@@ -48,13 +42,13 @@ function renderTitleBar() {
     </button>
     <div class="line"></div>
     <button onclick="window.sendCommand('minimize')" class="ctrl-btn btn-minimize" title="Minimize">
-      <l-icon name="${iconMinimize}"></l-icon>
+      <l-icon name="minimize-native"></l-icon>
     </button>
     <button onclick="toggleMaximize()" class="ctrl-btn btn-maximize" title="${actionText}">
-      <l-icon name="${iconMaximize}"></l-icon>
+      <l-icon name="${actionIcon}"></l-icon>
     </button>
     <button onclick="window.sendCommand('close')" class="ctrl-btn btn-close" title="Close">
-      <l-icon name="${iconClose}"></l-icon>
+      <l-icon name="close-native"></l-icon>
     </button>
   </div>
   `;

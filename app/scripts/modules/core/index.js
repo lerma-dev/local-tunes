@@ -6,7 +6,7 @@ export function initPlatformCore() {
   sincronizarFondoConCSharp();
   initTitlebar();
 
-  const inicializarEscritorio = () => {
+  const initDesktop = () => {
     if (window.chrome?.webview) {
       console.log("Entorno de escritorio (WebView2 C#) detectado.");
       if (typeof window.modeDesktopActive === "function") {
@@ -14,14 +14,16 @@ export function initPlatformCore() {
       }
     } else {
       console.log("Corriendo en entorno web estándar (Navegador).");
+      // destruir barra de título cuando estando en un navegador web estándar
+      document.querySelectorAll("#desktop-titlebar").forEach((el) => el.remove());
     }
   };
 
   // Si la página ya cargó o se está cargando, intentamos disparar el modo escritorio
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", inicializarEscritorio);
+    document.addEventListener("DOMContentLoaded", initDesktop);
   } else {
-    inicializarEscritorio();
+    initDesktop();
   }
 
   // Listener para mensajes desde C#
