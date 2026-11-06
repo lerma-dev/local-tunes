@@ -61,7 +61,7 @@ export const initDesktopBanner = () => {
           text: "Descargar",
           action: () => {
             window.location.href =
-              "https://github.com/lerma-dev/local-tunes/releases/download/v1.6.6/local_tunes_v1.6.6.exe";
+              "https://github.com/lerma-dev/local-tunes-desktop/releases/latest/download/LocalTunes-setup.exe";
           },
         },
         { text: "Cancelar", action: null },
