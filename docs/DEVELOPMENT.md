@@ -67,22 +67,6 @@ Para forzar la actualización del Service Worker cuando hay cambios críticos:
 
 ---
 
-## 🖥️ Integración con la app de escritorio (v1.0.0)
-
-En la versión 1.0.0 de Local Tunes Desktop, la interfaz web utiliza una detección automática para verificar si se está ejecutando dentro del contenedor de escritorio (WebView2) comprobando `window.chrome.webview`. Dicha lógica en `core/windows.core.js` permite:
-
-- **Web → Escritorio:** enviar comandos mediante `window.chrome.webview.postMessage` (cerrar, minimizar, maximizar, arrastrar ventana, barra de título y menú de sistema).
-- **Escritorio → Web:** exponer en `app.js` los métodos globales `window.togglePlay`, `window.playNext` y `window.playPrev` para controlarlos desde la bandeja del sistema.
-
-> ⚠️ **Nota:** Esta detección y su lógica correspondiente **solo se utilizan si se instala la versión 1.0.0**, ya que en versiones posteriores (`1.0.1+`) los assets se empaquetan de forma local y esta interoperabilidad se gestiona directamente en el entorno nativo.
-
-## 🏛️ Arquitectura de Assets y Core (v1.0.0+)
-
-A partir de la versión 1.0.0 de **Local Tunes Desktop**, se reestructuró la distribución de recursos y la estabilidad del núcleo:
-
-- **Congelación del Core (Core Freeze):** Los módulos base (`app/scripts/modules/core/index.js` y `app/scripts/modules/core/windows.core.js`) se mantienen en estado estático para garantizar la retrocompatibilidad con la aplicación nativa y evitar rupturas en el puente WebView2.
-- **Assets Locales Bundled (`web_assets`):** Toda la estructura contenida en `app/` se empaqueta y distribuye localmente en el cliente de escritorio. Esto elimina las peticiones a repositorios o archivos comprimidos remotos, garantiza un tiempo de inicio inmediato (splash screen) y facilita el acceso offline con APIs nativas.
-
 ## 🌎 Flujo de Despliegue Limpio (Subtrees)
 
 Para evitar subir archivos innecesarios de documentación o scripts de arranque al hosting, el despliegue se hace dividiendo el repositorio mediante `git subtree push`. Solo el mantenedor realiza estos despliegues.

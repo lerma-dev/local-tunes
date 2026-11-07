@@ -12,7 +12,7 @@ Un reproductor de música web de alto rendimiento diseñado para gestionar libre
   <img src="https://img.shields.io/badge/Get_it_on-GitHub_Pages-bc13fe?style=for-the-badge&logo=github&logoColor=white" alt="Get it on GitHub Pages">
 </a>
 
-<a href="https://github.com/lerma-dev/local-tunes-desktop/releases/download/v1.0.0/local-tunes-v1.0.0-Universal.exe">
+<a href="https://github.com/lerma-dev/local-tunes-desktop/releases/latest/download/LocalTunes-setup.exe">
   <img src="https://img.shields.io/badge/Dowload_for-WINDOWS-0078D4?style=for-the-badge&logoColor=white&labelColor=555555" alt="Download for Windows">
 </a>
 
