@@ -3,10 +3,6 @@ import { state } from "../utils/state.js";
 import { setTheme, getStoredTheme } from "../utils/theme.js";
 import { setMode, getStoredMode, syncModeIcon } from "../utils/mode.js";
 import {
-  aplicarDiseñoCompleto,
-  sincronizarFondoConCSharp,
-} from "../core/windows.core.js";
-import {
   exportBackup,
   importBackup,
   checkBackupReminder,
@@ -178,7 +174,6 @@ export function initSettings() {
     const isDark = toggleTheme.checked;
     setTheme(isDark ? "dark" : "light");
     themeIcon.setAttribute("name", isDark ? "mode-dark" : "mode-ligth");
-    sincronizarFondoConCSharp();
   });
 
 

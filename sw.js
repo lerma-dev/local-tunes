@@ -1,5 +1,5 @@
 // app/sw.js
-const CACHE_NAME = "v2.0.3";
+const CACHE_NAME = "v2.0.4";
 const SHARE_DB_NAME = "MusicAppDB";
 const SHARE_STORE_NAME = "library_meta";
 
@@ -57,7 +57,7 @@ self.addEventListener("fetch", (e) => {
   const requestUrl = new URL(e.request.url);
   if (
     e.request.method === "POST" &&
-    requestUrl.pathname.endsWith("/share-to-localtunes")
+    requestUrl.pathname.endsWith("./share-to-localtunes")
   ) {
     e.respondWith(handleShareTarget(e.request));
     return;
