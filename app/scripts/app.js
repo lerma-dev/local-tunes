@@ -6,14 +6,12 @@ import { saveLibraryToDB, openDB, storeName } from "./modules/db/database.js";
 import { initSidebar } from "./modules/ui/sidebar.js";
 import { initTabBar } from "./modules/ui/tab-bar.js";
 import { applyStoredTheme } from "./modules/utils/theme.js";
-import { initPlatformCore } from "./modules/core/index.js";
 import { showModal } from "./modules/components/modal.js";
 import { consumePendingShare } from "./modules/core/share_target.js";
 
 applyStoredTheme();
 
 (async () => {
-  initPlatformCore();
   await loadViews();
 
   const { initPlayer, togglePlay, playNext, playPrev, mode } =
