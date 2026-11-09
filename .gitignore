@@ -1,2 +1,5 @@
 /deploy.sh
 /server.log
+
+node_modules/
+dist/

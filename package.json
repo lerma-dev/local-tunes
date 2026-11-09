@@ -1,0 +1,16 @@
+{
+  "name": "local-tunes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "preview": "vite preview",
+    "dev": "vite app"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0",
+    "express": "^5.3.0",
+    "html-minifier-terser": "^7.2.0",
+    "vite": "^8.3.6"
+  }
+}
