@@ -5,22 +5,24 @@ Esta guía explica la arquitectura interna del reproductor y el flujo de desplie
 ## 📁 Estructura de Archivos del Repositorio
 
 * `/app/`: Código de la aplicación web que se despliega en producción y beta.
-  * `index.html`, `manifest.json`: punto de entrada y manifiesto de la PWA.
-  * `version.json`: versión y nombre en clave de la app (ver [Versionado](#-versionado-y-actualizaciones)).
+  * `index.html`, `manifest.json`: punto de entrada y manifiesto de la PWA. El `manifest.json` también guarda la versión y el nombre en clave de la app (ver [Versionado](#-versionado-y-actualizaciones)).
   * `sw.js`: estrategias de caché de la PWA y manejo del ciclo de actualización.
-  * `register_sw.js`: registro del Service Worker, con exclusión de entornos de desarrollo local.
-  * `/pages/`: fragmentos HTML de las vistas, modales y componentes, enumerados en `pages/manifest.json`.
+  * El registro del Service Worker es un `<script>` al final de `index.html`, con exclusión de entornos de desarrollo local.
+  * `/pages/`: fragmentos HTML de las vistas, modales y componentes, enumerados en `pages/manifest.json`. En desarrollo se cargan por separado; en el build se incrustan dentro de `index.html`.
   * `/styles/`: CSS organizado en `base/` (reset, fuentes, temas y variables), `components/` y `layouts/`, unificados desde `main.css`.
   * `/assets/`: fuentes, íconos, íconos propios (`lerma-icons/`) y capturas.
   * `/scripts/`: lógica JavaScript modularizada (ver abajo).
 * `/docs/`: documentación técnica del proyecto.
-* `server.py`: script para levantar el servidor local en el puerto 3300.
+* `build.js`: script de compilación que genera `dist/` (ver [Build y optimización](#-build-y-optimización)).
+* `package.json`: dependencias de desarrollo y comandos (`dev`, `build`, `preview`).
+* `/.github/workflows/`: workflows de despliegue a `beta` y `prod`.
+* `/dist/`: resultado del build. Se genera solo y **no se sube al repositorio**.
 
 ### Módulos de JavaScript (`/app/scripts/modules/`)
 
 | Carpeta | Contenido |
 |---|---|
-| `core/` | Arranque, integración con la app de escritorio (`windows.core.js`) y recepción de archivos compartidos (`share_target.js`) |
+| `core/` | Arranque y recepción de archivos compartidos (`share_target.js`) |
 | `components/` | Reproductor, canciones, carpetas, favoritos, playlists, ecualizador, visualizadores, ajustes, toasts y banners |
 | `db/` | Acceso a IndexedDB (`database.js`, `libraryDB.js`) |
 | `ui/` | Vistas, sidebar, tab bar, modales, menú contextual de canciones y loader |
@@ -43,18 +45,37 @@ La base de datos se llama **`MusicAppDB`** (versión 1) y tiene un único almac�
 
 > El Service Worker (`sw.js`) usa el mismo nombre de base de datos y de almacén para guardar los archivos compartidos. Si cambias `MusicAppDB` o `library_meta`, actualiza también `sw.js`.
 
-## 🔢 Versionado y actualizaciones
+## 🧱 Build y optimización
 
-La versión vive en `app/version.json`:
+Lo que se publica es `dist/`, generado por `build.js` a partir de `app/` (que no se modifica):
 
-```json
-{ "version": "2.0.2", "codename": "tasmania" }
+```bash
+npm run dev       # servidor de desarrollo sobre app/
+npm run build     # genera dist/
+npm run preview   # sirve dist/ en http://localhost:4173
 ```
 
-Hay dos mecanismos de actualización, y ambos dependen de que la versión cambie:
+El build hace lo siguiente:
 
-1. **PWA (navegador):** `sw.js` define `CACHE_NAME` (hoy `"v2.0.2"`). Al cambiarlo, el navegador detecta un Service Worker nuevo y descarta la caché anterior. Mantén `CACHE_NAME` alineado con `version.json` en cada release.
-2. **App de escritorio:** la app de [local-tunes-desktop](https://github.com/lerma-dev/local-tunes-desktop) lee `version.json` desde la raíz de la rama `beta` y **vuelve a descargar toda la interfaz solo cuando la versión remota es distinta de la local**. Si publicas cambios en `beta` sin cambiar la versión, los usuarios de escritorio no los recibirán.
+| Paso | Resultado |
+|---|---|
+| JS | `app.js`, sus módulos e `icons.js` se unen en **un solo** `scripts/app.js` minificado. `sw.js` se minifica aparte (el navegador lo pide directo). |
+| Iconos | Los SVG de `assets/lerma-icons/` se incrustan en `app.js` para el componente `<l-icon>`. |
+| CSS | Los `@import` de `styles/main.css` se unen en **un solo** `styles/main.css` minificado. |
+| HTML | Las vistas de `pages/` se incrustan dentro de `index.html`. Los `<l-icon>` estáticos pasan a `<svg>` directo (se dejan como `<l-icon>` los que tienen `id`, porque el JS les cambia el `name`). Se precargan las fuentes y se minifica. |
+| JSON | `manifest.json` y demás se minifican. |
+
+> El `index.html` de `app/` puede conservar sus etiquetas `<script>` de desarrollo: el build quita las que ya no hacen falta en `dist/`.
+
+## 🔢 Versionado y actualizaciones
+
+La versión vive en `app/manifest.json` (los campos `version` y `codename` son extra: los navegadores ignoran lo que no conocen, así que no afectan a la instalación de la PWA):
+
+```json
+{ "version": "2.0.5", "codename": "tasmania" }
+```
+
+La actualización de la PWA depende de que la versión cambie: `sw.js` define `CACHE_NAME` (hoy `"v2.0.5"`). Al cambiarlo, el navegador detecta un Service Worker nuevo y descarta la caché anterior. Mantén `CACHE_NAME` alineado con la `version` de `manifest.json` en cada release.
 
 ## 🔄 Ciclo de Actualización (Skip Waiting)
 
@@ -67,11 +88,13 @@ Para forzar la actualización del Service Worker cuando hay cambios críticos:
 
 ---
 
-## 🌎 Flujo de Despliegue Limpio (Subtrees)
+## 🌎 Flujo de Despliegue (GitHub Actions)
 
-Para evitar subir archivos innecesarios de documentación o scripts de arranque al hosting, el despliegue se hace dividiendo el repositorio mediante `git subtree push`. Solo el mantenedor realiza estos despliegues.
+El despliegue lo hacen dos workflows en `.github/workflows/`. Ambos instalan dependencias (`npm ci`), compilan (`npm run build`) y publican **solo el contenido de `dist/`** en la raíz de una rama, de modo que cada proveedor lee `index.html` directamente ahí. No se suben documentación, scripts ni archivos de desarrollo.
 
-* **Entorno Beta (GitHub Pages):** se toma únicamente el contenido de `/app` y se empuja a la raíz de la rama `beta`.
-* **Entorno de Producción (Netlify):** se toma únicamente el contenido de `/app` y se empuja a la raíz de la rama `prod`.
+* **Entorno Beta (GitHub Pages):** `deploy-beta.yml` se ejecuta automáticamente al hacer push a `main` (o a mano desde la pestaña *Actions*) y publica `dist/` en la rama `beta`.
+* **Entorno de Producción (Netlify):** `deploy-prod.yml` se ejecuta **solo a mano** desde la pestaña *Actions* ("Run workflow") y publica `dist/` en la rama `prod`. No usa tags ni crea releases.
 
-Esto permite que cada proveedor de hosting lea `index.html` directamente en la raíz de su rama.
+> Los workflows reescriben las ramas `beta` y `prod` completas en cada despliegue (`force_orphan`), por lo que no conservan historial. No edites código en ellas.
+
+Antes de publicar una versión, sube el número en `app/manifest.json` y en `CACHE_NAME` de `app/sw.js`, para que los usuarios con el Service Worker instalado reciban la actualización.

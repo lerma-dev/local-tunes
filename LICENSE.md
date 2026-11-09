@@ -38,7 +38,7 @@ Las contribuciones al repositorio oficial son bienvenidas **exclusivamente media
 Esta licencia **no aplica** a los componentes de terceros incluidos en este repositorio, que se rigen por sus propias licencias:
 
 * **Íconos** (`app/assets/lerma-icons/`): basados en [Ionicons](https://github.com/ionic-team/ionicons), licencia MIT.
-* **Fuentes** (`app/assets/fonts/`): Outfit, Playfair Display y Yuyu, licenciadas bajo la SIL Open Font License 1.1.
+* **Fuentes** (`app/assets/fonts/`): **Outfit** y **Playfair Display** , licenciadas bajo la SIL Open Font License 1.1.
 
 ### Renuncia de Responsabilidad
 

@@ -15,7 +15,7 @@
 
 ## Cómo probarlo
 
-<!-- Pasos para verificar el cambio. Puedes levantar el servidor local con ./start_app.sh o con: python3 -m http.server 3300 --directory app -->
+<!-- Pasos para verificar el cambio. Levanta el servidor local con `npm install` y `npm run dev` (http://localhost:5173). Para probar la versión compilada: `npm run build` y `npm run preview` -->
 
 1.
 2.
@@ -26,11 +26,14 @@
 
 ## Lista de verificación
 
-- [ ] Probé los cambios en local (`http://localhost:3300`).
+- [ ] Probé los cambios en local (`npm run dev`) y compilé sin errores (`npm run build`).
 - [ ] El PR apunta a la rama `main` (no a `beta` ni `prod`).
 - [ ] Usé Vanilla JS y no agregué dependencias externas pesadas.
 - [ ] Revisé que la interfaz se vea bien en móvil y en escritorio.
-- [ ] No interfiere con la detección de entornos locales de `register_sw.js`.
+- [ ] No interfiere con la detección de entornos locales del registro del Service Worker (`<script>` en `index.html`).
+- [ ] Optimicé los recursos que agregué (imágenes `.webp` comprimidas, SVG con SVGO y `currentColor`, fuentes `.woff2` recortadas).
+- [ ] Revisé que el peso de `dist/` no crezca sin una razón clara.
+- [ ] No subí `dist/` ni `node_modules/`.
 - [ ] No creé tags ni releases (solo el mantenedor los publica).
 
 ## Términos de contribución

@@ -5,16 +5,16 @@
 ## 🌿 Estructura de Ramas
 
 * **`main`**: Rama principal de desarrollo. Contiene todo el código fuente, scripts de entorno y documentación (`docs/`, `README.md`, etc.). **Todos los Pull Requests deben apuntar aquí.**
-* **`beta` (Solo Lectura - GitHub Pages)**: Rama de despliegue para pruebas experimentales. Es un *subtree* de la carpeta `app`. **Protegida.**
-* **`prod` (Solo Lectura - Netlify)**: Rama de despliegue estable para producción. Es un *subtree* de la carpeta `app`. **Protegida.**
+* **`beta` (Solo Lectura - GitHub Pages)**: Rama de despliegue para pruebas experimentales. La genera GitHub Actions con el contenido de `dist/` (la app compilada y minificada). **Protegida.**
+* **`prod` (Solo Lectura - Netlify)**: Rama de despliegue estable para producción. La genera GitHub Actions (acción manual del mantenedor) con el contenido de `dist/`. **Protegida.**
 
 > [!IMPORTANT]
-> Las ramas `beta` y `prod` son de **solo lectura** para los colaboradores y se gestionan exclusivamente mediante los scripts de despliegue del Administrador. No abras Pull Requests hacia ellas.
+> Las ramas `beta` y `prod` son de **solo lectura** para los colaboradores y se gestionan exclusivamente mediante los workflows de despliegue del Administrador. No abras Pull Requests hacia ellas.
 
 ## 🛠️ ¿Cómo colaborar?
 
 1. **Haz un Fork** del proyecto.
-2. **Prepara tu entorno local** siguiendo la sección *Entorno de Desarrollo Local* del [README](README.md) (necesitas Python 3 para levantar el servidor en el puerto 3300).
+2. **Prepara tu entorno local** siguiendo la sección *Entorno de Desarrollo Local* del [README](README.md) (necesitas Node.js: `npm install` y luego `npm run dev`).
 3. **Crea una rama de trabajo** a partir de `main`:
 
 ```bash
@@ -29,6 +29,8 @@ git checkout -b feat/mi-nueva-mejora
 ### Reglas importantes
 
 * **No se hace push directo a `main`.** Todo cambio pasa por Pull Request y revisión.
+* **Optimiza todo recurso que subas** (imágenes, SVG, fuentes) siguiendo la sección *Optimización de recursos* del [README](README.md), y comprueba que `npm run build` compile sin errores.
+* **No subas `dist/` ni `node_modules/`.** Se generan solos y están en `.gitignore`.
 * **No crees tags ni releases.** Solo el mantenedor los publica y gestiona los despliegues a `beta` y `prod`.
 * **No envíes PRs con la sección de términos de contribución sin marcar.** No se aceptarán.
 
@@ -50,4 +52,5 @@ Si no vas a escribir código, puedes abrir un **Issue** en el repositorio o escr
 
 * **Vanilla JS:** Código limpio, modular y directo. Evita añadir librerías o dependencias externas pesadas.
 * **Diseño Responsivo:** Enfoque Mobile-First para asegurar que la interfaz se adapte perfectamente tanto a smartphones como a resoluciones de escritorio.
-* **Service Worker Seguro:** Verifica que tus modificaciones no interfieran con la lógica de detección de entornos locales en `register_sw.js`.
+* **Service Worker Seguro:** Verifica que tus modificaciones no interfieran con la lógica de detección de entornos locales del script de registro del Service Worker (al final de `index.html`).
+* **Recursos ligeros:** Cada KB cuenta. Imágenes en `.webp`, SVG optimizados con `currentColor`, fuentes `.woff2` recortadas y nada de librerías que no se usen (ver pesos objetivo en el [README](README.md)).
