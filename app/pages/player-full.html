@@ -1,6 +1,6 @@
 <!-- 6. PANTALLA REPRODUCTOR COMPLETO -->
 <section id="view-player-full" class="full-player">
-    <button class="close-full" onclick="hideFullPlayer()">
+    <button class="close-full" onclick="hideFullPlayer()" aria-label="Cerrar reproductor">
         <l-icon name="chevron-down"></l-icon>
     </button>
     <div class="full-content">
@@ -26,18 +26,18 @@
             </div>
         </div>
         <div class="full-controls">
-            <button id="full-prev-btn">
+            <button id="full-prev-btn" aria-label="Anterior">
                 <l-icon name="play-back"></l-icon>
             </button>
-            <button id="full-play-btn" class="main-play">
+            <button id="full-play-btn" class="main-play" aria-label="Reproducir">
                 <l-icon id="full-play-icon" name="play"></l-icon>
             </button>
-            <button id="full-next-btn">
+            <button id="full-next-btn" aria-label="Siguiente">
                 <l-icon name="play-forward"></l-icon>
             </button>
         </div>
         <div class="extra-controls">
-            <button class="mode-btn" onclick="mode();">
+            <button class="mode-btn" onclick="mode();" aria-label="Modo de reproducción">
                 <l-icon id="mode-icon" name="repeat"></l-icon>
             </button>
         </div>

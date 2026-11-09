@@ -1,4 +1,5 @@
 // app/scripts/app.js
+import "./icons.js";
 import { loadViews } from "./modules/ui/loader.js";
 import { loadFavorites } from "./modules/components/favorites.js";
 import { loadFromDatabase } from "./modules/db/libraryDB.js";

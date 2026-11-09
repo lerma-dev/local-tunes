@@ -327,7 +327,7 @@
 
   .sidebar-bottom {
     margin-top: auto;
-    display: none;
+    display: flex;
     gap: 8px;
     padding: 0 4px;
   }

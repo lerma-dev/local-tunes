@@ -1,5 +1,5 @@
 // app/sw.js
-const CACHE_NAME = "v2.0.4";
+const CACHE_NAME = "v2.0.5";
 const SHARE_DB_NAME = "MusicAppDB";
 const SHARE_STORE_NAME = "library_meta";
 
@@ -8,7 +8,6 @@ const ASSETS = [
   "./index.html",
   "./styles/main.css",
   "./scripts/app.js",
-  "./scripts/icons.js",
   "./manifest.json",
 ];
 

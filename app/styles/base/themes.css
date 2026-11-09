@@ -32,6 +32,12 @@
   --modal-bg: linear-gradient(145deg, #ede9ff, #e5e0ff);
   --modal-overlay: rgba(20, 15, 50, 0.45);
   --settings-overlay: rgba(100, 80, 160, 0.25);
+
+  /* Tabs */
+  --bg-btn-ctrl: #f1eff7;             
+  --border-btn-ctrl: 1px solid #7c5dfa;
+  --color-btn-ctrl: #7c5dfa;       
+  --shadow-btn-ctrl: rgba(124, 93, 250, 0.2);
 }
 
 [data-theme="dark"] {
@@ -64,4 +70,10 @@
   --modal-bg: linear-gradient(145deg, #1a1735, #0f0d20);
   --modal-overlay: rgba(4, 3, 12, 0.75);
   --settings-overlay: rgba(0, 0, 0, 0.6);
+
+  /* Tabs */
+  --bg-btn-ctrl: #2a114d;
+  --border-btn-ctrl: 1px solid rgba(161, 118, 255, 0.3); 
+  --color-btn-ctrl: #a176ff; 
+  --shadow-btn-ctrl: rgba(161, 118, 255, 0.15); 
 }

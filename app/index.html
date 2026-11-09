@@ -6,28 +6,6 @@
     <meta name="description" content="Tu reproductor de música local, diseñado para la privacidad y la gestión eficiente de tu biblioteca personal sin rastreadores." />
     <meta name="theme-color" content="#201c4f" />
     <title>Local Tunes</title>
-    <!-- Scripts de inicialización -->
-    <script>
-      requestAnimationFrame(() => {
-        const loadingScreen = document.getElementById("loading-screen");
-        if (loadingScreen) {
-          loadingScreen.classList.add("fade-out");
-          setTimeout(() => loadingScreen.remove(), 2000);
-        }
-      });
-      const version = async () => {
-        try {
-          const res = await fetch("./version.json");
-          const data = await res.json();
-          localStorage.setItem("AppVersion", data.version);
-          localStorage.setItem("AppCodename", data.codename );
-        }catch (e) {
-          console.error("Error al obtener la versión:", e);
-        }
-      };
-      version();
-    </script>
-    <!-- Estilos de la pantalla de carga -->
     <style>
       .loading-screen {
         position: fixed;
@@ -40,7 +18,7 @@
         font-family: system-ui, -apple-system, sans-serif;
         color: #fff;
         opacity: 1;
-        transition: opacity 2s ease-out;
+        transition: opacity .9s ease-out;
       }
       .loading-screen.fade-out {
         opacity: 0;
@@ -102,8 +80,45 @@
     <audio id="audio-engine"></audio>
 
     <!-- javascripts -->
-    <script src="./scripts/icons.js"></script>
     <script type="module" src="./scripts/app.js"></script>
-    <script src="./register_sw.js"></script>
+    <script>
+      const hostname = window.location.hostname;
+      const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
+      if (isLocal) {
+        console.info("Service Worker: Desactivado en entorno local.");
+      } else if ("serviceWorker" in navigator) {
+        /*
+          Registro del Service Worker 
+          Recarga automática cuando el nuevo SW toma el control
+        */
+        navigator.serviceWorker.register("./sw.js");
+        
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
+        });
+      }
+      requestAnimationFrame(() => {
+        const loadingScreen = document.getElementById("loading-screen");
+        if (loadingScreen) {
+          loadingScreen.classList.add("fade-out");
+          setTimeout(() => loadingScreen.remove(), 900);
+        }
+      });
+      const version = async () => {
+        try {
+          const res = await fetch("./manifest.json");
+          const data = await res.json();
+          localStorage.setItem("AppVersion", data.version);
+          localStorage.setItem("AppCodename", data.codename);
+        }catch (e) {
+          console.error("Error al obtener la versión:", e);
+        }
+      };
+      version();
+    </script>
   </body>
 </html>

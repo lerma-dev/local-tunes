@@ -299,6 +299,11 @@ export function updatePlayButtons(isPlaying) {
     const name   = isPlaying ? 'pause' : 'play';
     if (pIcon)  pIcon.setAttribute('name',  name);
     if (fPIcon) fPIcon.setAttribute('name', name);
+
+    // Nombre accesible del botón según el estado  
+    const label = isPlaying ? 'Pausar' : 'Reproducir';   
+    document.getElementById('play-btn')?.setAttribute('aria-label', label);   
+    document.getElementById('full-play-btn')?.setAttribute('aria-label', label);   
 }
 
 function formatTime(s) {
