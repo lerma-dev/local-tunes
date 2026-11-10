@@ -1,5 +1,5 @@
 // app/sw.js
-const CACHE_NAME = "v2.0.5";
+const CACHE_NAME = "v2.0.6";
 const SHARE_DB_NAME = "MusicAppDB";
 const SHARE_STORE_NAME = "library_meta";
 
@@ -34,8 +34,21 @@ self.addEventListener("activate", (e) => {
   return self.clients.claim();
 });
 
-// fetch - estrategia cache-first
 self.addEventListener("fetch", (e) => {
+  const requestUrl = new URL(e.request.url);
+
+  // Share Files of the system to the app (Web Share Target API)
+  if (
+    e.request.method === "POST" &&
+    requestUrl.pathname.endsWith("/share-to-localtunes")
+  ) {
+    e.respondWith(handleShareTarget(e.request));
+    return;
+  }
+
+  // fetch cache-first strategy
+  if (e.request.method !== "GET") return;
+
   e.respondWith(
     caches.match(e.request).then((res) => {
       return (
@@ -52,15 +65,6 @@ self.addEventListener("fetch", (e) => {
       );
     }),
   );
-
-  const requestUrl = new URL(e.request.url);
-  if (
-    e.request.method === "POST" &&
-    requestUrl.pathname.endsWith("./share-to-localtunes")
-  ) {
-    e.respondWith(handleShareTarget(e.request));
-    return;
-  }
 });
 
 async function handleShareTarget(request) {
@@ -68,7 +72,7 @@ async function handleShareTarget(request) {
     const formData = await request.formData();
     const sharedFiles = formData
       .getAll("audio")
-      .filter((f) => f instanceof File && /\.(mp3|wav|ogg|m4a)$/i.test(f.name));
+      .filter((f) => f instanceof File && /\.(mp3|wav|ogg|m4a|flac)$/i.test(f.name));
 
     if (sharedFiles.length > 0) {
       const db = await openShareDB();

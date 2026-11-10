@@ -49,7 +49,7 @@ export const showBannerUpdates = () => {
     <button class="whats-new-btn" id="btn-whats-new">
       <l-icon name="sparkles"></l-icon>
     </button>
-  </div>d
+  </div>
   `;
 
   document.getElementById("btn-whats-new").addEventListener("click", () => {
