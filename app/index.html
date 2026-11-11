@@ -113,7 +113,6 @@
           const res = await fetch("./manifest.json");
           const data = await res.json();
           localStorage.setItem("AppVersion", data.version);
-          localStorage.setItem("AppCodename", data.codename);
         }catch (e) {
           console.error("Error al obtener la versión:", e);
         }

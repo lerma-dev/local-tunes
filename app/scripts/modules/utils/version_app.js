@@ -6,8 +6,7 @@ export const initVersionApp = () => {
   */
   const hostname = window.location.hostname;
   const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
-  const appVersion = localStorage.getItem("AppVersion") ?? "0.0.0";
-  const appCodename = localStorage.getItem("AppCodename") ?? "";  
+  const appVersion = localStorage.getItem("AppVersion") ?? "0.0.0"; 
   const tag_version = document.getElementById("version_app");
 
   const appendWaterMark = (text) => {
@@ -18,7 +17,7 @@ export const initVersionApp = () => {
     document.body.appendChild(badge);
   };
   // Función interna para actualizar el texto
-  const updateDisplay = (version, codename) => {
+  const updateDisplay = (version) => {
     let appChannel = "Stable";
 
     if (hostname.includes("github.io")) {
@@ -30,8 +29,8 @@ export const initVersionApp = () => {
     }
 
     if (tag_version) {
-      tag_version.textContent = `Local Tunes v${version} "${codename}" (${appChannel})`;
+      tag_version.textContent = `Local Tunes v${version} (${appChannel})`;
     }
   };
-  updateDisplay(appVersion, appCodename);
+  updateDisplay(appVersion);
 };

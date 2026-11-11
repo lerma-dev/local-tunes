@@ -141,13 +141,13 @@ Aquí se puede apreciar el comportamiento en la pestaña *Network* del navegador
 
 **Antes de la optimización (Múltiples archivos sueltos):**
 <br>
-<img src="docs/images/Antes-Network-3G.png" alt="Antes de la optimización" width="600px">
+<img src="docs/images/antes_network_3G.webp" alt="Antes de la optimización" width="600px">
 
 <br>
 
 **Después de la optimización (Bundle unificado con script de build):**
 <br>
-<img src="docs/images/Despues-Network-3G.png" alt="Después de la optimización" width="600px">
+<img src="docs/images/despues_network_3G.webp" alt="Después de la optimización" width="600px">
 
 ### 📈 Resultados de la optimización
 

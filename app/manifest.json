@@ -1,7 +1,6 @@
 {
   "id": "com.lermatech.localtunes",
-  "version": "2.0.6",
-  "codename": "tasmania",
+  "version": "2.0.7",
   "name": "Local Tunes (PWA)",
   "short_name": "L-Tunes",
   "description": "Tu reproductor de música local, diseñado para la privacidad y la gestión eficiente de tu biblioteca personal sin rastreadores.",
@@ -50,45 +49,52 @@
   "screenshots": [
     {
       "src": "./assets/screenshots/screen_1.webp",
-      "sizes": "640x1314",
+      "sizes": "480x1066",
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "Vista de reproductor en móvil"
     },
     {
       "src": "./assets/screenshots/screen_2.webp",
-      "sizes": "640x1314",
+      "sizes": "480x1066",
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "Vista de todas las canciones"
     },
     {
       "src": "./assets/screenshots/screen_3.webp",
-      "sizes": "640x1314",
+      "sizes": "480x1066",
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "Vista  de las canciones favoritas"
     },
     {
       "src": "./assets/screenshots/screen_4.webp",
-      "sizes": "640x1314",
+      "sizes": "480x1066",
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "Vista de la pantalla principal de las playlist"
     },
     {
       "src": "./assets/screenshots/screen_5.webp",
-      "sizes": "640x1314",
+      "sizes": "480x1066",
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "Vista de los ajustes"
     },
     {
       "src": "./assets/screenshots/desktop_1.webp",
-      "sizes": "2112x1318",
+      "sizes": "1075x643",
       "type": "image/webp",
       "form_factor": "wide",
-      "label": "Interfaz principal en escritorio"
+      "label": "Interfaz principal en dark"
+    },
+    {
+      "src": "./assets/screenshots/desktop_2.webp",
+      "sizes": "1074x638",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Interfaz principal en light"
     }
   ]
 }
