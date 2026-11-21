@@ -8,10 +8,10 @@ export function showModal({ title, message, buttons = [] }) {
   // Lógica inteligente: Solo devuelve la clase si existe un mapeo
   const getButtonClass = (text) => {
     const t = text.toLowerCase();
-    if (["confirmar", "aceptar", "sí", "entendido", "descargar"].includes(t)) {
+    if (["confirmar", "aceptar", "sí", "entendido", "descargar", "apoyar"].includes(t)) {
       return "confirm-btn--success";
     }
-    if (["cancelar", "cerrar", "no"].includes(t)) {
+    if (["cancelar", "cerrar", "no", "ahora no"].includes(t)) {
       return "confirm-btn--cancel";
     }
     return "";

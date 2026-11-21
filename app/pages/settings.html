@@ -122,13 +122,6 @@
             <div class="settings-row__desc">MP3, FLAC, OGG y WAV</div>
           </div>
         </div>
-      </div>
-
-      <div class="settings-divider"></div>
-
-      <!-- General -->
-      <div class="settings-group">
-        <div class="settings-group__label">General</div>
 
         <!-- Respaldos -->
         <div class="settings-row backup-row" id="backup-row">
@@ -167,15 +160,34 @@
             <div class="settings-row__desc">Se eliminaran todas tus canciones</div>
           </div>
         </div>
+      </div>
+
+      <div class="settings-divider"></div>
+      <!-- Informacion -->
+      <div class="settings-group">
+        <div class="settings-group__label">Más Información</div>
 
         <!-- Mi Portal -->
-        <div class="settings-row" onclick="window.open('https://lerma-dev.vercel.app', '_blank')">
+        <div class="settings-row" onclick="window.open('https://lerma-dev.vercel.app', '_blank', 'noopener,noreferrer')">
           <div class="settings-row__icon">
             <l-icon name="globe-outline"></l-icon>
           </div>
           <div class="settings-row__text">
             <div class="settings-row__label">Mi Portal</div>
             <div class="settings-row__desc">Conoce más sobre mis proyectos</div>
+          </div>
+        </div>
+
+        <!-- Apoyame -->
+        <div class="settings-row" role="button" tabindex="0">
+          <div class="settings-row__icon">
+            <l-icon name="heart-outline"></l-icon>
+          </div>
+          <div class="settings-row__text" id="buymeacoffee">
+            <div class="settings-row__label">Apóyame</div>
+            <p class="settings-row__desc">
+              Invítame un café si te gusta la app
+            </p>
           </div>
         </div>
 

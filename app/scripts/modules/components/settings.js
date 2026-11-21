@@ -75,6 +75,7 @@ export function initSettings() {
   const closeBtn = document.getElementById("settings-close-btn");
   const libraryBtn = document.getElementById("btn_settings_library");
   const aboutMeBtn = document.getElementById("btn_settings_aboutMe");
+  const BuyMeAcoffee = document.getElementById("buymeacoffee");
 
   window.abrirAjustes = openSettingsHandler;
 
@@ -101,6 +102,38 @@ export function initSettings() {
       autoClose: true,
     });
   });
+
+ // -- Apóyame
+BuyMeAcoffee.addEventListener("click", () => {
+  showModal({
+    title: `
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <span>Invítame un café</span>
+      </div>
+    `,
+    message: `
+      <p style="margin-top: 8px; font-size: 0.95em; line-height: 1.5; opacity: 0.9;">
+        Local Tunes es y seguirá siendo gratis, local y sin anuncios.
+      </p>
+      <p style="margin-top: 10px; font-size: 0.88em; line-height: 1.5; opacity: 0.78;">
+        No estás obligado a nada, pero si te gusta el proyecto y quieres echarme una mano,
+        cualquier aporte se agradece muchísimo. ¡Gracias por escuchar!
+      </p>
+    `,
+    buttons: [
+      {
+        text: "Apoyar",
+        action: () => {
+          window.open("https://buymeacoffee.com/debugappwe4", "_blank", "noopener,noreferrer");
+        }
+      },
+      {
+        text: "Ahora no",
+        action: null
+      }
+    ]
+  });
+});
 
   // -- Boton de acerca de 
   aboutMeBtn.addEventListener("click", () => {

@@ -1,6 +1,6 @@
 {
   "id": "com.lermatech.localtunes",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "name": "Local Tunes (PWA)",
   "short_name": "L-Tunes",
   "description": "Tu reproductor de música local, diseñado para la privacidad y la gestión eficiente de tu biblioteca personal sin rastreadores.",
